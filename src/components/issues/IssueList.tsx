@@ -28,6 +28,13 @@ const fragment = graphql`
       edges {
         node {
           nodeId
+          issue_labelsCollection {
+            edges {
+              node {
+                label_id
+              }
+            }
+          }
           ...IssueListItem_issue
           ...StatusSelector_issue
         }
@@ -40,14 +47,30 @@ const fragment = graphql`
   }
 `
 
-export function IssueList({ queryRef }: { queryRef: IssueList_query$key }) {
+export function IssueList({
+  queryRef,
+  selectedLabelIds,
+}: {
+  queryRef: IssueList_query$key
+  selectedLabelIds: Set<string>
+}) {
   const { data, loadNext, isLoadingNext } = usePaginationFragment(fragment, queryRef)
 
-  const edges = data.issuesCollection?.edges ?? []
+  const allEdges = data.issuesCollection?.edges ?? []
+
+  // Client-side label filter
+  const edges =
+    selectedLabelIds.size === 0
+      ? allEdges
+      : allEdges.filter((edge: Edge) => {
+          const issueLabelIds =
+            edge.node.issue_labelsCollection?.edges.map((e) => e.node.label_id as string) ?? []
+          return Array.from(selectedLabelIds).every((id) => issueLabelIds.includes(id))
+        })
+
   const hasNextPage = data.issuesCollection?.pageInfo.hasNextPage ?? false
 
-  // Seed realtime map with records from initial query
-  const initialNodeIds = edges.map((edge: Edge) => ({
+  const initialNodeIds = allEdges.map((edge: Edge) => ({
     uuid: edge.node.nodeId.replace("issues:", ""),
     nodeId: edge.node.nodeId,
   }))

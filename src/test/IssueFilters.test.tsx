@@ -7,8 +7,10 @@ describe("IssueFilters", () => {
   const defaultProps = {
     status: "",
     priority: "",
+    selectedLabelIds: new Set<string>(),
     onStatusChange: vi.fn(),
     onPriorityChange: vi.fn(),
+    onLabelToggle: vi.fn(),
   }
 
   it("renders status and priority selects", () => {

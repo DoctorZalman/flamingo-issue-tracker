@@ -54,6 +54,7 @@ const DEMO_AUTHOR_ID = "a1b2c3d4-0000-0000-0000-000000000001"
 export function CommentThread({ issueRef }: { issueRef: CommentThread_issue$key }) {
   const { data, loadNext, isLoadingNext } = usePaginationFragment(fragment, issueRef)
   const [commit, isInFlight] = useMutation(addCommentMutation)
+  const [hasContent, setHasContent] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   // Uncontrolled input — avoids re-render on every keystroke
@@ -125,9 +126,15 @@ export function CommentThread({ issueRef }: { issueRef: CommentThread_issue$key 
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="comment-body">Add a comment</Label>
-        <Textarea id="comment-body" ref={bodyRef} rows={3} placeholder="Add a comment..." />
+        <Textarea
+          id="comment-body"
+          ref={bodyRef}
+          rows={3}
+          placeholder="Add a comment..."
+          onChange={(e) => setHasContent(e.target.value.trim().length > 0)}
+        />
         {error && <p className="text-xs text-red-500">{error}</p>}
-        <Button onClick={handleSubmit} disabled={isInFlight} className="self-end">
+        <Button onClick={handleSubmit} disabled={isInFlight || !hasContent} className="self-end">
           {isInFlight ? "Posting..." : "Post comment"}
         </Button>
       </div>

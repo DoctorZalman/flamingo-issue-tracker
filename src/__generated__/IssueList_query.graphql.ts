@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1b83a7e272b702443e947b91ed2b406f>>
+ * @generated SignedSource<<876d0802fed03b6bb2f3e3db824e5237>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,13 @@ export type IssueList_query$data = {
   readonly issuesCollection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly issue_labelsCollection: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly label_id: string;
+            };
+          }>;
+        } | null | undefined;
         readonly nodeId: string;
         readonly " $fragmentSpreads": FragmentRefs<"IssueListItem_issue" | "StatusSelector_issue">;
       };
@@ -126,6 +133,46 @@ return {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "issue_labelsConnection",
+                  "kind": "LinkedField",
+                  "name": "issue_labelsCollection",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "issue_labelsEdge",
+                      "kind": "LinkedField",
+                      "name": "edges",
+                      "plural": true,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "issue_labels",
+                          "kind": "LinkedField",
+                          "name": "node",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "label_id",
+                              "storageKey": null
+                            }
+                          ],
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "IssueListItem_issue"
@@ -189,6 +236,6 @@ return {
 };
 })();
 
-(node as any).hash = "2a493e3da6cb8e5e179a2c74f165aa4c";
+(node as any).hash = "fa86064e51fc20a91986f15fe066d32e";
 
 export default node;

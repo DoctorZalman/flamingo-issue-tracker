@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e0b15c7b89c9af8cdbf1e32037eb1de>>
+ * @generated SignedSource<<a16a199d914902bcdaf66483d78f0210>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -190,6 +190,68 @@ return {
                 "plural": false,
                 "selections": [
                   (v5/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "issue_labelsConnection",
+                    "kind": "LinkedField",
+                    "name": "issue_labelsCollection",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "issue_labelsEdge",
+                        "kind": "LinkedField",
+                        "name": "edges",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "issue_labels",
+                            "kind": "LinkedField",
+                            "name": "node",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "label_id",
+                                "storageKey": null
+                              },
+                              (v5/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "labels",
+                                "kind": "LinkedField",
+                                "name": "labels",
+                                "plural": false,
+                                "selections": [
+                                  (v6/*: any*/),
+                                  (v7/*: any*/),
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "color",
+                                    "storageKey": null
+                                  },
+                                  (v5/*: any*/)
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
                   (v6/*: any*/),
                   {
                     "alias": null,
@@ -222,61 +284,6 @@ return {
                         "storageKey": null
                       },
                       (v5/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "issue_labelsConnection",
-                    "kind": "LinkedField",
-                    "name": "issue_labelsCollection",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "issue_labelsEdge",
-                        "kind": "LinkedField",
-                        "name": "edges",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "issue_labels",
-                            "kind": "LinkedField",
-                            "name": "node",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "labels",
-                                "kind": "LinkedField",
-                                "name": "labels",
-                                "plural": false,
-                                "selections": [
-                                  (v6/*: any*/),
-                                  (v7/*: any*/),
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "color",
-                                    "storageKey": null
-                                  },
-                                  (v5/*: any*/)
-                                ],
-                                "storageKey": null
-                              },
-                              (v5/*: any*/)
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
                     ],
                     "storageKey": null
                   },
@@ -350,16 +357,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "de82396cfc5c905b303939f05f53182b",
+    "cacheID": "42f5172596bb2f0c28fda92413a3c0ed",
     "id": null,
     "metadata": {},
     "name": "IssueListPaginationQuery",
     "operationKind": "query",
-    "text": "query IssueListPaginationQuery(\n  $after: Cursor\n  $filter: issuesFilter\n  $first: Int = 3\n) {\n  ...IssueList_query_G9cLv\n}\n\nfragment IssueListItem_issue on issues {\n  nodeId\n  id\n  title\n  priority\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n}\n\nfragment IssueList_query_G9cLv on Query {\n  issuesCollection(first: $first, after: $after, filter: $filter, orderBy: [{created_at: DescNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...IssueListItem_issue\n        ...StatusSelector_issue\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment StatusSelector_issue on issues {\n  nodeId\n  status\n}\n"
+    "text": "query IssueListPaginationQuery(\n  $after: Cursor\n  $filter: issuesFilter\n  $first: Int = 3\n) {\n  ...IssueList_query_G9cLv\n}\n\nfragment IssueListItem_issue on issues {\n  nodeId\n  id\n  title\n  priority\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n}\n\nfragment IssueList_query_G9cLv on Query {\n  issuesCollection(first: $first, after: $after, filter: $filter, orderBy: [{created_at: DescNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        issue_labelsCollection {\n          edges {\n            node {\n              label_id\n              nodeId\n            }\n          }\n        }\n        ...IssueListItem_issue\n        ...StatusSelector_issue\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment StatusSelector_issue on issues {\n  nodeId\n  status\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2a493e3da6cb8e5e179a2c74f165aa4c";
+(node as any).hash = "fa86064e51fc20a91986f15fe066d32e";
 
 export default node;
