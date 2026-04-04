@@ -7,7 +7,10 @@
     "relay": "relay-compiler",
     "build": "yarn relay && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ./src --ext .ts,.tsx",
+    "prepare": "husky",
+    "format": "prettier --write ./src",
+    "format:check": "prettier --check ./src"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.101.1",
@@ -29,9 +32,23 @@
     "concurrently": "^9.2.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
     "get-graphql-schema": "^2.1.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.1",
     "relay-compiler": "^20.1.1",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css}": [
+      "prettier --write"
+    ]
   }
 }
