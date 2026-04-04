@@ -46,9 +46,10 @@ export function IssueList({ queryRef }: { queryRef: IssueList_query$key }) {
   const hasNextPage = data.issuesCollection?.pageInfo.hasNextPage ?? false
 
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden">
+    <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900">
+      {" "}
       {edges.length === 0 ? (
-        <p className="p-8 text-center text-gray-500">No issues found</p>
+        <p className="p-8 text-center text-gray-500 dark:text-gray-400">No issues found</p>
       ) : (
         edges.map((edge: Edge) => (
           <div key={edge.node.nodeId} className="flex items-center">
@@ -62,11 +63,11 @@ export function IssueList({ queryRef }: { queryRef: IssueList_query$key }) {
         ))
       )}
       {hasNextPage && (
-        <div className="p-4 text-center border-t border-gray-200">
+        <div className="p-4 text-center border-t border-gray-200 dark:border-gray-700">
           <button
             onClick={() => loadNext(10)}
             disabled={isLoadingNext}
-            className="text-sm text-indigo-600 hover:text-indigo-800 disabled:opacity-50"
+            className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 disabled:opacity-50"
           >
             {isLoadingNext ? "Loading..." : "Load more"}
           </button>
