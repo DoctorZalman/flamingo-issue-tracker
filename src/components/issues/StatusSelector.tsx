@@ -56,6 +56,8 @@ export function StatusSelector({ issueRef }: { issueRef: StatusSelector_issue$ke
       options={STATUS_OPTIONS}
       onChange={handleChange}
       disabled={isInFlight}
+      aria-label="status"
+      name="status"
     />
   )
 }

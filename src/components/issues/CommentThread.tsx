@@ -8,7 +8,9 @@ import type { CommentThread_issue$key } from "@/__generated__/CommentThread_issu
 import type { CommentThread_issue$data } from "@/__generated__/CommentThread_issue.graphql"
 import { CommentItem } from "./CommentItem"
 import { CommentSchema } from "@/lib/zod-schemas"
-import type { RecordSourceSelectorProxy } from "relay-runtime"
+import { Button } from "@/components/ui/Button"
+import { Textarea } from "@/components/ui/Textarea"
+import { Label } from "@/components/ui/Label"
 
 type CommentEdge = NonNullable<CommentThread_issue$data["commentsCollection"]>["edges"][number]
 
@@ -108,43 +110,26 @@ export function CommentThread({ issueRef }: { issueRef: CommentThread_issue$key 
 
   return (
     <section aria-label="Comments" className="mt-8">
-      <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Comments</h2>
-
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-1 md:mb-4">Comments</h2>
       <div className="mb-6">
         {edges.map((edge: CommentEdge) => (
           <CommentItem key={edge.node.nodeId} commentRef={edge.node} />
         ))}
 
         {hasNextPage && (
-          <button
-            onClick={() => loadNext(5)}
-            disabled={isLoadingNext}
-            className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline disabled:opacity-50 mt-2"
-          >
+          <Button onClick={() => loadNext(5)} disabled={isLoadingNext}>
             {isLoadingNext ? "Loading..." : "Load more comments"}
-          </button>
+          </Button>
         )}
       </div>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="comment-body" className="sr-only">
-          Add a comment
-        </label>
-        <textarea
-          id="comment-body"
-          ref={bodyRef}
-          rows={3}
-          placeholder="Add a comment..."
-          className="w-full text-sm border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
+        <Label htmlFor="comment-body">Add a comment</Label>
+        <Textarea id="comment-body" ref={bodyRef} rows={3} placeholder="Add a comment..." />
         {error && <p className="text-xs text-red-500">{error}</p>}
-        <button
-          onClick={handleSubmit}
-          disabled={isInFlight}
-          className="self-end text-sm px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg disabled:opacity-50 transition-colors"
-        >
+        <Button onClick={handleSubmit} disabled={isInFlight} className="self-end">
           {isInFlight ? "Posting..." : "Post comment"}
-        </button>
+        </Button>
       </div>
     </section>
   )

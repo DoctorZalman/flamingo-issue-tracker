@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d451f2ea9e9498104b485a45f5dee2e7>>
+ * @generated SignedSource<<0e2213f97006e8131041addf542f6444>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -87,7 +87,7 @@ v2 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 10
+    "value": 3
   },
   {
     "kind": "Literal",
@@ -329,12 +329,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1958d2cc0ac264824e471380b99e1942",
+    "cacheID": "8e8bb66aa7ee74fe7c3f57eb8677cb06",
     "id": null,
     "metadata": {},
     "name": "pageIssuesQuery",
     "operationKind": "query",
-    "text": "query pageIssuesQuery(\n  $filter: issuesFilter\n) {\n  ...IssueList_query_Vt7Yj\n}\n\nfragment IssueListItem_issue on issues {\n  nodeId\n  id\n  title\n  priority\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n}\n\nfragment IssueList_query_Vt7Yj on Query {\n  issuesCollection(first: 10, filter: $filter, orderBy: [{created_at: DescNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...IssueListItem_issue\n        ...StatusSelector_issue\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment StatusSelector_issue on issues {\n  nodeId\n  status\n}\n"
+    "text": "query pageIssuesQuery(\n  $filter: issuesFilter\n) {\n  ...IssueList_query_Vt7Yj\n}\n\nfragment IssueListItem_issue on issues {\n  nodeId\n  id\n  title\n  priority\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n}\n\nfragment IssueList_query_Vt7Yj on Query {\n  issuesCollection(first: 3, filter: $filter, orderBy: [{created_at: DescNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...IssueListItem_issue\n        ...StatusSelector_issue\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment StatusSelector_issue on issues {\n  nodeId\n  status\n}\n"
   }
 };
 })();

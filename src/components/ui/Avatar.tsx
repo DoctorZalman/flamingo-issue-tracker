@@ -1,4 +1,7 @@
+"use client"
+
 import Image from "next/image"
+import { useState } from "react"
 
 interface AvatarProps {
   name: string
@@ -6,18 +9,23 @@ interface AvatarProps {
 }
 
 export function Avatar({ name, avatarUrl }: AvatarProps) {
+  const [imgError, setImgError] = useState(false)
+
+  const showImage = avatarUrl && !imgError
+
   return (
     <div className="flex items-center gap-2">
-      {avatarUrl ? (
+      {showImage ? (
         <Image
           src={avatarUrl}
           alt={name}
-          width={6}
-          height={6}
+          width={24}
+          height={24}
           className="w-6 h-6 rounded-full object-cover"
+          onError={() => setImgError(true)}
         />
       ) : (
-        <div className="w-6 h-6 rounded-full bg-indigo-500 flex items-center justify-center text-white text-xs font-medium">
+        <div className="w-6 h-6 rounded-full bg-[#ffc008] flex items-center justify-center text-white text-xs font-medium">
           {name[0].toUpperCase()}
         </div>
       )}

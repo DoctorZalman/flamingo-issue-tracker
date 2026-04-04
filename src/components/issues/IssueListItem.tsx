@@ -5,6 +5,7 @@ import { graphql } from "relay-runtime"
 import type { IssueListItem_issue$key } from "@/__generated__/IssueListItem_issue.graphql"
 import type { IssueListItem_issue$data } from "@/__generated__/IssueListItem_issue.graphql"
 import Link from "next/link"
+import { ROUTES } from "@/lib/routes"
 
 type LabelEdge = NonNullable<IssueListItem_issue$data["issue_labelsCollection"]>["edges"][number]
 
@@ -37,17 +38,19 @@ export function IssueListItem({ issueRef }: { issueRef: IssueListItem_issue$key 
 
   return (
     <Link
-      href={`/issues/${issue.id}`}
-      className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+      href={ROUTES.issue(issue.id)}
+      className="flex items-center justify-between p-4 transition-colors"
     >
       <div className="flex flex-col gap-1">
-        <span className="font-medium text-gray-900 dark:text-white">{issue.title}</span>{" "}
+        <p className="font-medium text-gray-900 dark:text-white max-w-[140px] md:max-w-none truncate">
+          {issue.title}
+        </p>{" "}
         {issue.users && <span className="text-xs text-gray-500">{issue.users.name}</span>}
-        <div className="flex gap-2">
+        <div className="flex flex-col md:flex-row md:flex-wrap gap-1 md:gap-2">
           {issue.issue_labelsCollection?.edges.map((edge: LabelEdge) => (
             <span
               key={edge.node.labels?.id}
-              className="text-xs px-2 py-0.5 rounded-full text-white"
+              className="text-xs px-2 py-0.5 rounded-full text-white w-fit"
               style={{ backgroundColor: edge.node.labels?.color ?? "#6366f1" }}
             >
               {edge.node.labels?.name}

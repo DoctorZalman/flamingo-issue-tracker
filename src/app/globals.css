@@ -2,7 +2,7 @@
 @config "../../tailwind.config.ts";
 
 :root {
-  --background: #ffffff;
+  --background: #fafafa;
   --foreground: #171717;
 }
 
@@ -15,4 +15,30 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+.font-azeret {
+  font-family: var(--font-azeret-mono), monospace;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ffc008 transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #ffc008;
+  border-radius: 999px;
+}
+
+body {
+  overflow-x: hidden;
 }

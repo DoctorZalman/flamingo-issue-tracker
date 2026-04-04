@@ -4,9 +4,12 @@ import { Suspense, use } from "react"
 import { useLazyLoadQuery } from "react-relay"
 import { graphql } from "relay-runtime"
 import { notFound } from "next/navigation"
-import { IssueDetail } from "@/components/issues/IssueDetail"
 import Link from "next/link"
+import { IssueDetail } from "@/components/issues/IssueDetail"
+import { IssueDetailSkeleton } from "@/components/ui/Skeleton"
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary"
 import { Container } from "@/components/ui/Container"
+import { ROUTES } from "@/lib/routes"
 
 const query = graphql`
   query pageIssueDetailQuery($id: UUID!) {
@@ -37,16 +40,16 @@ export default function IssueDetailPage({ params }: { params: Promise<{ id: stri
     <main>
       <Container>
         <Link
-          href="/issues"
-          className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors mb-6"
+          href={ROUTES.issues}
+          className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-[#ffc008] dark:hover:text-[#ffc008] transition-colors mb-6"
         >
           ← Back to Issues
         </Link>
-        <Suspense
-          fallback={<p className="text-center text-gray-500 dark:text-gray-400 p-8">Loading...</p>}
-        >
-          <IssueDetailContent id={id} />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<IssueDetailSkeleton />}>
+            <IssueDetailContent id={id} />
+          </Suspense>
+        </ErrorBoundary>
       </Container>
     </main>
   )
