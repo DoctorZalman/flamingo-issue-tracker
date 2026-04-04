@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { usePaginationFragment, useMutation } from "react-relay"
-import { graphql, ConnectionHandler } from "relay-runtime"
-import { useRef, useState } from "react"
-import { toast } from "sonner"
-import type { CommentThread_issue$key } from "@/__generated__/CommentThread_issue.graphql"
-import type { CommentThread_issue$data } from "@/__generated__/CommentThread_issue.graphql"
-import { CommentItem } from "./CommentItem"
-import { CommentSchema } from "@/lib/zod-schemas"
-import { Button } from "@/components/ui/Button"
-import { Textarea } from "@/components/ui/Textarea"
-import { Label } from "@/components/ui/Label"
+import { usePaginationFragment, useMutation } from "react-relay";
+import { graphql, ConnectionHandler } from "relay-runtime";
+import { useRef, useState } from "react";
+import { toast } from "sonner";
+import type { CommentThread_issue$key } from "@/__generated__/CommentThread_issue.graphql";
+import type { CommentThread_issue$data } from "@/__generated__/CommentThread_issue.graphql";
+import { CommentItem } from "./CommentItem";
+import { CommentSchema } from "@/lib/zod-schemas";
+import { Button } from "@/components/ui/Button";
+import { Textarea } from "@/components/ui/Textarea";
+import { Label } from "@/components/ui/Label";
 
-type CommentEdge = NonNullable<CommentThread_issue$data["commentsCollection"]>["edges"][number]
+type CommentEdge = NonNullable<CommentThread_issue$data["commentsCollection"]>["edges"][number];
 
 const fragment = graphql`
   fragment CommentThread_issue on issues
@@ -33,7 +33,7 @@ const fragment = graphql`
       }
     }
   }
-`
+`;
 
 const addCommentMutation = graphql`
   mutation CommentThreadAddMutation($issueId: UUID!, $body: String!, $authorId: UUID!) {
@@ -46,33 +46,33 @@ const addCommentMutation = graphql`
       }
     }
   }
-`
+`;
 
 // Default author for demo — first seed user
-const DEMO_AUTHOR_ID = "a1b2c3d4-0000-0000-0000-000000000001"
+const DEMO_AUTHOR_ID = "a1b2c3d4-0000-0000-0000-000000000001";
 
 export function CommentThread({ issueRef }: { issueRef: CommentThread_issue$key }) {
-  const { data, loadNext, isLoadingNext } = usePaginationFragment(fragment, issueRef)
-  const [commit, isInFlight] = useMutation(addCommentMutation)
-  const [hasContent, setHasContent] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const { data, loadNext, isLoadingNext } = usePaginationFragment(fragment, issueRef);
+  const [commit, isInFlight] = useMutation(addCommentMutation);
+  const [hasContent, setHasContent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Uncontrolled input — avoids re-render on every keystroke
-  const bodyRef = useRef<HTMLTextAreaElement>(null)
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
 
-  const edges = data.commentsCollection?.edges ?? []
-  const hasNextPage = data.commentsCollection?.pageInfo.hasNextPage ?? false
+  const edges = data.commentsCollection?.edges ?? [];
+  const hasNextPage = data.commentsCollection?.pageInfo.hasNextPage ?? false;
 
   const handleSubmit = () => {
-    const body = bodyRef.current?.value ?? ""
-    const result = CommentSchema.safeParse({ body })
+    const body = bodyRef.current?.value ?? "";
+    const result = CommentSchema.safeParse({ body });
 
     if (!result.success) {
-      setError(result.error.issues[0].message)
-      return
+      setError(result.error.issues[0].message);
+      return;
     }
 
-    setError(null)
+    setError(null);
 
     commit({
       variables: {
@@ -83,31 +83,31 @@ export function CommentThread({ issueRef }: { issueRef: CommentThread_issue$key 
       // Prepend new comment to connection
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       updater: (store: any, payload: any) => {
-        const records = payload?.insertIntocommentsCollection?.records
-        if (!records?.length) return
+        const records = payload?.insertIntocommentsCollection?.records;
+        if (!records?.length) return;
 
-        const issueRecord = store.get(data.nodeId)
-        if (!issueRecord) return
+        const issueRecord = store.get(data.nodeId);
+        if (!issueRecord) return;
 
         const connection = ConnectionHandler.getConnection(
           issueRecord,
           "CommentThread_issue_commentsCollection"
-        )
-        if (!connection) return
+        );
+        if (!connection) return;
 
-        const newRecord = store.get(records[0].nodeId)
-        if (!newRecord) return
+        const newRecord = store.get(records[0].nodeId);
+        if (!newRecord) return;
 
-        const edge = ConnectionHandler.createEdge(store, connection, newRecord, "commentsEdge")
-        ConnectionHandler.insertEdgeAfter(connection, edge)
+        const edge = ConnectionHandler.createEdge(store, connection, newRecord, "commentsEdge");
+        ConnectionHandler.insertEdgeAfter(connection, edge);
       },
       onCompleted: () => {
-        if (bodyRef.current) bodyRef.current.value = ""
-        toast.success("Comment added")
+        if (bodyRef.current) bodyRef.current.value = "";
+        toast.success("Comment added");
       },
       onError: () => toast.error("Failed to add comment"),
-    })
-  }
+    });
+  };
 
   return (
     <section aria-label="Comments" className="mt-8">
@@ -139,5 +139,5 @@ export function CommentThread({ issueRef }: { issueRef: CommentThread_issue$key 
         </Button>
       </div>
     </section>
-  )
+  );
 }

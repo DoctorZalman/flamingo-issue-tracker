@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useFragment } from "react-relay"
-import { graphql } from "relay-runtime"
-import type { IssueListItem_issue$key } from "@/__generated__/IssueListItem_issue.graphql"
-import type { IssueListItem_issue$data } from "@/__generated__/IssueListItem_issue.graphql"
-import Link from "next/link"
-import { ROUTES } from "@/lib/routes"
+import { useFragment } from "react-relay";
+import { graphql } from "relay-runtime";
+import type { IssueListItem_issue$key } from "@/__generated__/IssueListItem_issue.graphql";
+import type { IssueListItem_issue$data } from "@/__generated__/IssueListItem_issue.graphql";
+import Link from "next/link";
+import { ROUTES } from "@/lib/routes";
 
-type LabelEdge = NonNullable<IssueListItem_issue$data["issue_labelsCollection"]>["edges"][number]
+type LabelEdge = NonNullable<IssueListItem_issue$data["issue_labelsCollection"]>["edges"][number];
 
 const fragment = graphql`
   fragment IssueListItem_issue on issues {
@@ -31,10 +31,10 @@ const fragment = graphql`
       }
     }
   }
-`
+`;
 
 export function IssueListItem({ issueRef }: { issueRef: IssueListItem_issue$key }) {
-  const issue = useFragment(fragment, issueRef)
+  const issue = useFragment(fragment, issueRef);
 
   return (
     <Link
@@ -64,5 +64,5 @@ export function IssueListItem({ issueRef }: { issueRef: IssueListItem_issue$key 
         </span>
       </div>
     </Link>
-  )
+  );
 }

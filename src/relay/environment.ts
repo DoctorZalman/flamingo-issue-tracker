@@ -1,4 +1,4 @@
-import { Environment, Network, RecordSource, Store } from "relay-runtime"
+import { Environment, Network, RecordSource, Store } from "relay-runtime";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const fetchFn = async (request: any, variables: any) => {
@@ -10,12 +10,12 @@ const fetchFn = async (request: any, variables: any) => {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}`,
     },
     body: JSON.stringify({ query: request.text, variables }),
-  })
-  return response.json()
-}
+  });
+  return response.json();
+};
 
 // Singleton environment instance
-let environment: InstanceType<typeof Environment> | null = null
+let environment: InstanceType<typeof Environment> | null = null;
 
 export function createEnvironment(): InstanceType<typeof Environment> {
   return new Environment({
@@ -23,13 +23,13 @@ export function createEnvironment(): InstanceType<typeof Environment> {
     store: new Store(new RecordSource()),
     // Maps pg_graphql nodeId to Relay's global record identity
     getDataID: (node: Record<string, unknown>) => {
-      if (typeof node.nodeId === "string") return node.nodeId
-      return node.id as string
+      if (typeof node.nodeId === "string") return node.nodeId;
+      return node.id as string;
     },
-  })
+  });
 }
 
 export function getEnvironment(): InstanceType<typeof Environment> {
-  if (!environment) environment = createEnvironment()
-  return environment
+  if (!environment) environment = createEnvironment();
+  return environment;
 }

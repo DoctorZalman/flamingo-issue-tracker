@@ -1,18 +1,18 @@
 interface SelectOption {
-  value: string
-  label: string
+  value: string;
+  label: string;
 }
 
 interface SelectProps {
-  options: SelectOption[]
-  id?: string
-  name?: string
-  value?: string
-  defaultValue?: string
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
-  disabled?: boolean
-  "aria-label"?: string
-  ref?: React.Ref<HTMLSelectElement>
+  options: SelectOption[];
+  id?: string;
+  name?: string;
+  value?: string;
+  defaultValue?: string;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  disabled?: boolean;
+  "aria-label"?: string;
+  ref?: React.Ref<HTMLSelectElement>;
 }
 
 export function Select({
@@ -44,5 +44,5 @@ export function Select({
         </option>
       ))}
     </select>
-  )
+  );
 }

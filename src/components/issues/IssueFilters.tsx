@@ -1,25 +1,25 @@
-"use client"
+"use client";
 
-import { useLazyLoadQuery } from "react-relay"
-import { graphql } from "relay-runtime"
-import { Select } from "@/components/ui/Select"
-import type { IssueFiltersQuery$data } from "@/__generated__/IssueFiltersQuery.graphql"
+import { useLazyLoadQuery } from "react-relay";
+import { graphql } from "relay-runtime";
+import { Select } from "@/components/ui/Select";
+import type { IssueFiltersQuery$data } from "@/__generated__/IssueFiltersQuery.graphql";
 
-type LabelEdge = NonNullable<IssueFiltersQuery$data["labelsCollection"]>["edges"][number]
+type LabelEdge = NonNullable<IssueFiltersQuery$data["labelsCollection"]>["edges"][number];
 
 const STATUS_OPTIONS = [
   { value: "", label: "All statuses" },
   { value: "todo", label: "todo" },
   { value: "in_progress", label: "in progress" },
   { value: "done", label: "done" },
-]
+];
 
 const PRIORITY_OPTIONS = [
   { value: "", label: "All priorities" },
   { value: "low", label: "low" },
   { value: "medium", label: "medium" },
   { value: "high", label: "high" },
-]
+];
 
 const labelsQuery = graphql`
   query IssueFiltersQuery {
@@ -33,15 +33,15 @@ const labelsQuery = graphql`
       }
     }
   }
-`
+`;
 
 interface IssueFiltersProps {
-  status: string
-  priority: string
-  selectedLabelIds: Set<string>
-  onStatusChange: (value: string) => void
-  onPriorityChange: (value: string) => void
-  onLabelToggle: (id: string) => void
+  status: string;
+  priority: string;
+  selectedLabelIds: Set<string>;
+  onStatusChange: (value: string) => void;
+  onPriorityChange: (value: string) => void;
+  onLabelToggle: (id: string) => void;
 }
 
 export function IssueFilters({
@@ -52,8 +52,8 @@ export function IssueFilters({
   onPriorityChange,
   onLabelToggle,
 }: IssueFiltersProps) {
-  const data = useLazyLoadQuery(labelsQuery, {})
-  const labels = data.labelsCollection?.edges ?? []
+  const data = useLazyLoadQuery(labelsQuery, {});
+  const labels = data.labelsCollection?.edges ?? [];
 
   return (
     <div className="flex flex-col gap-3 mb-6">
@@ -77,8 +77,8 @@ export function IssueFilters({
       {labels.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {labels.map((edge: LabelEdge) => {
-            const label = edge.node
-            const selected = selectedLabelIds.has(label.id)
+            const label = edge.node;
+            const selected = selectedLabelIds.has(label.id);
             return (
               <button
                 key={label.id}
@@ -93,10 +93,10 @@ export function IssueFilters({
               >
                 {label.name}
               </button>
-            )
+            );
           })}
         </div>
       )}
     </div>
-  )
+  );
 }

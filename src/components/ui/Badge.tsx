@@ -1,6 +1,6 @@
 interface BadgeProps {
-  label: string
-  color?: string
+  label: string;
+  color?: string;
 }
 
 export function Badge({ label, color }: BadgeProps) {
@@ -11,5 +11,5 @@ export function Badge({ label, color }: BadgeProps) {
     >
       {label}
     </span>
-  )
+  );
 }

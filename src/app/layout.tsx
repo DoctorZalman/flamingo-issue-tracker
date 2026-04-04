@@ -1,13 +1,13 @@
-import type { Metadata } from "next"
-import { Geist, Geist_Mono, Azeret_Mono } from "next/font/google"
-import Script from "next/script"
-import { Toaster } from "sonner"
-import { RelayProvider } from "@/relay/RelayProvider"
-import { Navbar } from "@/components/ui/Navbar"
-import "./globals.css"
+import type { Metadata } from "next";
+import { Geist, Geist_Mono, Azeret_Mono } from "next/font/google";
+import Script from "next/script";
+import { Toaster } from "sonner";
+import { RelayProvider } from "@/relay/RelayProvider";
+import { Navbar } from "@/components/ui/Navbar";
+import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] })
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] })
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Flamingo Issue Tracker",
@@ -15,13 +15,13 @@ export const metadata: Metadata = {
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦩</text></svg>",
   },
-}
+};
 
 const azeretMono = Azeret_Mono({
   variable: "--font-azeret-mono",
   subsets: ["latin"],
   weight: ["400", "600"],
-})
+});
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -43,5 +43,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </RelayProvider>
       </body>
     </html>
-  )
+  );
 }

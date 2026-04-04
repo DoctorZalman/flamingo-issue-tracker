@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { useState } from "react"
+import Image from "next/image";
+import { useState } from "react";
 
 interface AvatarProps {
-  name: string
-  avatarUrl?: string | null
+  name: string;
+  avatarUrl?: string | null;
 }
 
 export function Avatar({ name, avatarUrl }: AvatarProps) {
-  const [imgError, setImgError] = useState(false)
+  const [imgError, setImgError] = useState(false);
 
-  const showImage = avatarUrl && !imgError
+  const showImage = avatarUrl && !imgError;
 
   return (
     <div className="flex items-center gap-2">
@@ -31,5 +31,5 @@ export function Avatar({ name, avatarUrl }: AvatarProps) {
       )}
       <span className="text-sm text-gray-700 dark:text-gray-300">{name}</span>
     </div>
-  )
+  );
 }

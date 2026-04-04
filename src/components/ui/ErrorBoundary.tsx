@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import { Component } from "react"
-import type { ReactNode } from "react"
-import Link from "next/link"
-import { ROUTES } from "@/lib/routes"
+import { Component } from "react";
+import type { ReactNode } from "react";
+import Link from "next/link";
+import { ROUTES } from "@/lib/routes";
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 interface State {
-  hasError: boolean
-  message: string
+  hasError: boolean;
+  message: string;
 }
 
 // Class component required — React error boundaries cannot be function components
 export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
-    super(props)
-    this.state = { hasError: false, message: "" }
+    super(props);
+    this.state = { hasError: false, message: "" };
   }
 
   static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, message: error.message }
+    return { hasError: true, message: error.message };
   }
 
   render() {
@@ -43,9 +43,9 @@ export class ErrorBoundary extends Component<Props, State> {
             Back to Issues
           </Link>
         </div>
-      )
+      );
     }
 
-    return this.props.children
+    return this.props.children;
   }
 }

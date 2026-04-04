@@ -1,34 +1,34 @@
-"use client"
+"use client";
 
-import { useFragment, useMutation, useLazyLoadQuery } from "react-relay"
-import { graphql } from "relay-runtime"
-import { useRef, useState } from "react"
-import { toast } from "sonner"
-import { IssueEditSchema } from "@/lib/zod-schemas"
-import { Select } from "@/components/ui/Select"
-import { Label } from "@/components/ui/Label"
-import { Textarea } from "@/components/ui/Textarea"
-import { Button } from "@/components/ui/Button"
+import { useFragment, useMutation, useLazyLoadQuery } from "react-relay";
+import { graphql } from "relay-runtime";
+import { useRef, useState } from "react";
+import { toast } from "sonner";
+import { IssueEditSchema } from "@/lib/zod-schemas";
+import { Select } from "@/components/ui/Select";
+import { Label } from "@/components/ui/Label";
+import { Textarea } from "@/components/ui/Textarea";
+import { Button } from "@/components/ui/Button";
 
-import type { IssueEditForm_issue$key } from "@/__generated__/IssueEditForm_issue.graphql"
-import type { IssueEditForm_issue$data } from "@/__generated__/IssueEditForm_issue.graphql"
-import type { IssueEditFormQuery$data } from "@/__generated__/IssueEditFormQuery.graphql"
+import type { IssueEditForm_issue$key } from "@/__generated__/IssueEditForm_issue.graphql";
+import type { IssueEditForm_issue$data } from "@/__generated__/IssueEditForm_issue.graphql";
+import type { IssueEditFormQuery$data } from "@/__generated__/IssueEditFormQuery.graphql";
 
-type LabelEdge = NonNullable<IssueEditForm_issue$data["issue_labelsCollection"]>["edges"][number]
-type UserEdge = NonNullable<IssueEditFormQuery$data["usersCollection"]>["edges"][number]
-type AllLabelEdge = NonNullable<IssueEditFormQuery$data["labelsCollection"]>["edges"][number]
+type LabelEdge = NonNullable<IssueEditForm_issue$data["issue_labelsCollection"]>["edges"][number];
+type UserEdge = NonNullable<IssueEditFormQuery$data["usersCollection"]>["edges"][number];
+type AllLabelEdge = NonNullable<IssueEditFormQuery$data["labelsCollection"]>["edges"][number];
 
 const STATUS_OPTIONS = [
   { value: "todo", label: "todo" },
   { value: "in_progress", label: "in progress" },
   { value: "done", label: "done" },
-]
+];
 
 const PRIORITY_OPTIONS = [
   { value: "low", label: "low" },
   { value: "medium", label: "medium" },
   { value: "high", label: "high" },
-]
+];
 
 const fragment = graphql`
   fragment IssueEditForm_issue on issues {
@@ -47,7 +47,7 @@ const fragment = graphql`
       }
     }
   }
-`
+`;
 
 const updateMutation = graphql`
   mutation IssueEditFormUpdateMutation(
@@ -78,7 +78,7 @@ const updateMutation = graphql`
       }
     }
   }
-`
+`;
 
 const deleteLabelsMutation = graphql`
   mutation IssueEditFormDeleteLabelsMutation($issueId: UUID!) {
@@ -89,7 +89,7 @@ const deleteLabelsMutation = graphql`
       }
     }
   }
-`
+`;
 
 const insertLabelsMutation = graphql`
   mutation IssueEditFormInsertLabelsMutation($objects: [issue_labelsInsertInput!]!) {
@@ -100,7 +100,7 @@ const insertLabelsMutation = graphql`
       }
     }
   }
-`
+`;
 
 const usersAndLabelsQuery = graphql`
   query IssueEditFormQuery {
@@ -122,46 +122,46 @@ const usersAndLabelsQuery = graphql`
       }
     }
   }
-`
+`;
 
 export function IssueEditForm({ issueRef }: { issueRef: IssueEditForm_issue$key }) {
-  const issue = useFragment(fragment, issueRef)
-  const [commitUpdate, isUpdating] = useMutation(updateMutation)
-  const [commitDeleteLabels] = useMutation(deleteLabelsMutation)
-  const [commitInsertLabels] = useMutation(insertLabelsMutation)
-  const [errors, setErrors] = useState<Record<string, string>>({})
-  const [isDirty, setIsDirty] = useState(false)
+  const issue = useFragment(fragment, issueRef);
+  const [commitUpdate, isUpdating] = useMutation(updateMutation);
+  const [commitDeleteLabels] = useMutation(deleteLabelsMutation);
+  const [commitInsertLabels] = useMutation(insertLabelsMutation);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isDirty, setIsDirty] = useState(false);
 
-  const markDirty = () => setIsDirty(true)
+  const markDirty = () => setIsDirty(true);
 
-  const data = useLazyLoadQuery(usersAndLabelsQuery, {})
+  const data = useLazyLoadQuery(usersAndLabelsQuery, {});
 
-  const users = data.usersCollection?.edges ?? []
-  const allLabels = data.labelsCollection?.edges ?? []
+  const users = data.usersCollection?.edges ?? [];
+  const allLabels = data.labelsCollection?.edges ?? [];
 
   const currentLabelIds = new Set<string>(
     issue.issue_labelsCollection?.edges.map((e: LabelEdge) => e.node.label_id as string) ?? []
-  )
-  const [selectedLabelIds, setSelectedLabelIds] = useState<Set<string>>(currentLabelIds)
+  );
+  const [selectedLabelIds, setSelectedLabelIds] = useState<Set<string>>(currentLabelIds);
 
-  const titleRef = useRef<HTMLInputElement>(null)
-  const descriptionRef = useRef<HTMLTextAreaElement>(null)
-  const statusRef = useRef<HTMLSelectElement>(null)
-  const priorityRef = useRef<HTMLSelectElement>(null)
-  const assigneeRef = useRef<HTMLSelectElement>(null)
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const statusRef = useRef<HTMLSelectElement>(null);
+  const priorityRef = useRef<HTMLSelectElement>(null);
+  const assigneeRef = useRef<HTMLSelectElement>(null);
 
   const toggleLabel = (labelId: string) => {
-    setIsDirty(true)
+    setIsDirty(true);
     setSelectedLabelIds((prev) => {
-      const next = new Set(prev)
+      const next = new Set(prev);
       if (next.has(labelId)) {
-        next.delete(labelId)
+        next.delete(labelId);
       } else {
-        next.add(labelId)
+        next.add(labelId);
       }
-      return next
-    })
-  }
+      return next;
+    });
+  };
 
   const handleSave = () => {
     const values = {
@@ -169,23 +169,23 @@ export function IssueEditForm({ issueRef }: { issueRef: IssueEditForm_issue$key 
       description: descriptionRef.current?.value ?? "",
       status: statusRef.current?.value ?? "",
       priority: priorityRef.current?.value ?? "",
-    }
+    };
 
-    const result = IssueEditSchema.safeParse(values)
+    const result = IssueEditSchema.safeParse(values);
 
     if (!result.success) {
-      const fieldErrors: Record<string, string> = {}
+      const fieldErrors: Record<string, string> = {};
       result.error.issues.forEach((e) => {
-        const key = e.path[0]
-        if (key !== undefined) fieldErrors[String(key)] = e.message
-      })
-      setErrors(fieldErrors)
-      return
+        const key = e.path[0];
+        if (key !== undefined) fieldErrors[String(key)] = e.message;
+      });
+      setErrors(fieldErrors);
+      return;
     }
 
-    setErrors({})
+    setErrors({});
 
-    const assigneeId = assigneeRef.current?.value || null
+    const assigneeId = assigneeRef.current?.value || null;
 
     commitUpdate({
       variables: {
@@ -194,14 +194,14 @@ export function IssueEditForm({ issueRef }: { issueRef: IssueEditForm_issue$key 
         assigneeId,
       },
       onCompleted: () => {
-        setIsDirty(false)
+        setIsDirty(false);
         // Update labels after issue update succeeds
         commitDeleteLabels({
           variables: { issueId: issue.id },
           onCompleted: () => {
             if (selectedLabelIds.size === 0) {
-              toast.success("Issue updated")
-              return
+              toast.success("Issue updated");
+              return;
             }
             commitInsertLabels({
               variables: {
@@ -212,19 +212,19 @@ export function IssueEditForm({ issueRef }: { issueRef: IssueEditForm_issue$key 
               },
               onCompleted: () => toast.success("Issue updated"),
               onError: () => toast.error("Failed to update labels"),
-            })
+            });
           },
           onError: () => toast.error("Failed to update labels"),
-        })
+        });
       },
       onError: () => toast.error("Failed to update issue"),
-    })
-  }
+    });
+  };
 
   const userOptions = [
     { value: "", label: "Unassigned" },
     ...users.map((e: UserEdge) => ({ value: e.node.id, label: e.node.name })),
-  ]
+  ];
 
   return (
     <section aria-label="Edit issue" className="flex flex-col gap-4">
@@ -294,8 +294,8 @@ export function IssueEditForm({ issueRef }: { issueRef: IssueEditForm_issue$key 
         <Label>Labels</Label>
         <div className="flex flex-wrap gap-2">
           {allLabels.map((edge: AllLabelEdge) => {
-            const label = edge.node
-            const selected = selectedLabelIds.has(label.id)
+            const label = edge.node;
+            const selected = selectedLabelIds.has(label.id);
             return (
               <button
                 key={label.id}
@@ -310,7 +310,7 @@ export function IssueEditForm({ issueRef }: { issueRef: IssueEditForm_issue$key 
               >
                 {label.name}
               </button>
-            )
+            );
           })}
         </div>
       </div>
@@ -319,5 +319,5 @@ export function IssueEditForm({ issueRef }: { issueRef: IssueEditForm_issue$key 
         {isUpdating ? "Saving..." : "Save changes"}
       </Button>
     </section>
-  )
+  );
 }

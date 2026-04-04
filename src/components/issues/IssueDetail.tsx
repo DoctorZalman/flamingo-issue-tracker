@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useFragment } from "react-relay"
-import { graphql } from "relay-runtime"
-import type { IssueDetail_issue$key } from "@/__generated__/IssueDetail_issue.graphql"
-import { IssueEditForm } from "./IssueEditForm"
-import { CommentThread } from "./CommentThread"
-import { Avatar } from "@/components/ui/Avatar"
-import { Badge } from "@/components/ui/Badge"
+import { useFragment } from "react-relay";
+import { graphql } from "relay-runtime";
+import type { IssueDetail_issue$key } from "@/__generated__/IssueDetail_issue.graphql";
+import { IssueEditForm } from "./IssueEditForm";
+import { CommentThread } from "./CommentThread";
+import { Avatar } from "@/components/ui/Avatar";
+import { Badge } from "@/components/ui/Badge";
 
-import type { IssueDetail_issue$data } from "@/__generated__/IssueDetail_issue.graphql"
+import type { IssueDetail_issue$data } from "@/__generated__/IssueDetail_issue.graphql";
 
-type LabelEdge = NonNullable<IssueDetail_issue$data["issue_labelsCollection"]>["edges"][number]
+type LabelEdge = NonNullable<IssueDetail_issue$data["issue_labelsCollection"]>["edges"][number];
 
 const fragment = graphql`
   fragment IssueDetail_issue on issues {
@@ -35,10 +35,10 @@ const fragment = graphql`
     ...IssueEditForm_issue
     ...CommentThread_issue
   }
-`
+`;
 
 export function IssueDetail({ issueRef }: { issueRef: IssueDetail_issue$key }) {
-  const issue = useFragment(fragment, issueRef)
+  const issue = useFragment(fragment, issueRef);
 
   return (
     <article>
@@ -63,5 +63,5 @@ export function IssueDetail({ issueRef }: { issueRef: IssueDetail_issue$key }) {
       <IssueEditForm issueRef={issue} />
       <CommentThread issueRef={issue} />
     </article>
-  )
+  );
 }

@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { usePaginationFragment } from "react-relay"
-import { graphql } from "relay-runtime"
-import type { IssueList_query$key } from "@/__generated__/IssueList_query.graphql"
-import type { IssueList_query$data } from "@/__generated__/IssueList_query.graphql"
-import { IssueListItem } from "./IssueListItem"
-import { StatusSelector } from "./StatusSelector"
-import { useRealtimeIssues } from "@/hooks/useRealtimeIssues"
-import { Button } from "@/components/ui/Button"
+import { usePaginationFragment } from "react-relay";
+import { graphql } from "relay-runtime";
+import type { IssueList_query$key } from "@/__generated__/IssueList_query.graphql";
+import type { IssueList_query$data } from "@/__generated__/IssueList_query.graphql";
+import { IssueListItem } from "./IssueListItem";
+import { StatusSelector } from "./StatusSelector";
+import { useRealtimeIssues } from "@/hooks/useRealtimeIssues";
+import { Button } from "@/components/ui/Button";
 
-type Edge = NonNullable<IssueList_query$data["issuesCollection"]>["edges"][number]
+type Edge = NonNullable<IssueList_query$data["issuesCollection"]>["edges"][number];
 
 const fragment = graphql`
   fragment IssueList_query on Query
@@ -45,18 +45,18 @@ const fragment = graphql`
       }
     }
   }
-`
+`;
 
 export function IssueList({
   queryRef,
   selectedLabelIds,
 }: {
-  queryRef: IssueList_query$key
-  selectedLabelIds: Set<string>
+  queryRef: IssueList_query$key;
+  selectedLabelIds: Set<string>;
 }) {
-  const { data, loadNext, isLoadingNext } = usePaginationFragment(fragment, queryRef)
+  const { data, loadNext, isLoadingNext } = usePaginationFragment(fragment, queryRef);
 
-  const allEdges = data.issuesCollection?.edges ?? []
+  const allEdges = data.issuesCollection?.edges ?? [];
 
   // Client-side label filter
   const edges =
@@ -64,18 +64,18 @@ export function IssueList({
       ? allEdges
       : allEdges.filter((edge: Edge) => {
           const issueLabelIds =
-            edge.node.issue_labelsCollection?.edges.map((e) => e.node.label_id as string) ?? []
-          return Array.from(selectedLabelIds).every((id) => issueLabelIds.includes(id))
-        })
+            edge.node.issue_labelsCollection?.edges.map((e) => e.node.label_id as string) ?? [];
+          return Array.from(selectedLabelIds).every((id) => issueLabelIds.includes(id));
+        });
 
-  const hasNextPage = data.issuesCollection?.pageInfo.hasNextPage ?? false
+  const hasNextPage = data.issuesCollection?.pageInfo.hasNextPage ?? false;
 
   const initialNodeIds = allEdges.map((edge: Edge) => ({
     uuid: edge.node.nodeId.replace("issues:", ""),
     nodeId: edge.node.nodeId,
-  }))
+  }));
 
-  useRealtimeIssues(initialNodeIds)
+  useRealtimeIssues(initialNodeIds);
 
   return (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900">
@@ -104,5 +104,5 @@ export function IssueList({
         </div>
       )}
     </div>
-  )
+  );
 }

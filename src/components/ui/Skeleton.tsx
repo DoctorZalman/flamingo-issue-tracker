@@ -1,9 +1,9 @@
 interface SkeletonProps {
-  className?: string
+  className?: string;
 }
 
 function SkeletonBlock({ className = "" }: SkeletonProps) {
-  return <div className={`animate-pulse rounded bg-gray-200 dark:bg-gray-700 ${className}`} />
+  return <div className={`animate-pulse rounded bg-gray-200 dark:bg-gray-700 ${className}`} />;
 }
 
 export function IssueListSkeleton() {
@@ -25,7 +25,7 @@ export function IssueListSkeleton() {
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 export function IssueDetailSkeleton() {
@@ -42,5 +42,5 @@ export function IssueDetailSkeleton() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useFragment } from "react-relay"
-import { graphql } from "relay-runtime"
-import type { CommentItem_comment$key } from "@/__generated__/CommentItem_comment.graphql"
-import { Avatar } from "@/components/ui/Avatar"
+import { useFragment } from "react-relay";
+import { graphql } from "relay-runtime";
+import type { CommentItem_comment$key } from "@/__generated__/CommentItem_comment.graphql";
+import { Avatar } from "@/components/ui/Avatar";
 
 const fragment = graphql`
   fragment CommentItem_comment on comments {
@@ -15,10 +15,10 @@ const fragment = graphql`
       avatar_url
     }
   }
-`
+`;
 
 export function CommentItem({ commentRef }: { commentRef: CommentItem_comment$key }) {
-  const comment = useFragment(fragment, commentRef)
+  const comment = useFragment(fragment, commentRef);
 
   return (
     <article className="flex flex-col gap-2 py-4 border-b border-gray-100 dark:border-gray-800 last:border-0">
@@ -30,5 +30,5 @@ export function CommentItem({ commentRef }: { commentRef: CommentItem_comment$ke
       </div>
       <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{comment.body}</p>
     </article>
-  )
+  );
 }
