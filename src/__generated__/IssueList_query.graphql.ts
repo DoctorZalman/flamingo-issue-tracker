@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<876d0802fed03b6bb2f3e3db824e5237>>
+ * @generated SignedSource<<b7c4a84675ad0e1236ae67c9dee10b0f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type IssueList_query$data = {
   readonly issuesCollection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly id: string;
         readonly issue_labelsCollection: {
           readonly edges: ReadonlyArray<{
             readonly node: {
@@ -56,7 +57,7 @@ return {
       "name": "filter"
     },
     {
-      "defaultValue": 3,
+      "defaultValue": 5,
       "kind": "LocalArgument",
       "name": "first"
     }
@@ -130,6 +131,13 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "nodeId",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
                   "storageKey": null
                 },
                 {
@@ -236,6 +244,6 @@ return {
 };
 })();
 
-(node as any).hash = "fa86064e51fc20a91986f15fe066d32e";
+(node as any).hash = "eb1a0dfd695f82a794f3755c94389687";
 
 export default node;

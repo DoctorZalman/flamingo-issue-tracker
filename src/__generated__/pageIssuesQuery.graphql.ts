@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ea40086b5ec38f3bd4853657cbf040f2>>
+ * @generated SignedSource<<5f36b520ea657a53902c5adc19cd9bef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -87,7 +87,7 @@ v2 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 3
+    "value": 5
   },
   {
     "kind": "Literal",
@@ -169,6 +169,7 @@ return {
                 "plural": false,
                 "selections": [
                   (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -231,7 +232,6 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -336,12 +336,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d1fa43fa3cc48d4523e3471fd007cec8",
+    "cacheID": "7bf5d2e985b0dd8246eaaf2f802ff946",
     "id": null,
     "metadata": {},
     "name": "pageIssuesQuery",
     "operationKind": "query",
-    "text": "query pageIssuesQuery(\n  $filter: issuesFilter\n) {\n  ...IssueList_query_Vt7Yj\n}\n\nfragment IssueListItem_issue on issues {\n  nodeId\n  id\n  title\n  priority\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n}\n\nfragment IssueList_query_Vt7Yj on Query {\n  issuesCollection(first: 3, filter: $filter, orderBy: [{created_at: DescNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        issue_labelsCollection {\n          edges {\n            node {\n              label_id\n              nodeId\n            }\n          }\n        }\n        ...IssueListItem_issue\n        ...StatusSelector_issue\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment StatusSelector_issue on issues {\n  nodeId\n  status\n}\n"
+    "text": "query pageIssuesQuery(\n  $filter: issuesFilter\n) {\n  ...IssueList_query_Vt7Yj\n}\n\nfragment IssueListItem_issue on issues {\n  nodeId\n  id\n  title\n  priority\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n}\n\nfragment IssueList_query_Vt7Yj on Query {\n  issuesCollection(first: 5, filter: $filter, orderBy: [{created_at: DescNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        id\n        issue_labelsCollection {\n          edges {\n            node {\n              label_id\n              nodeId\n            }\n          }\n        }\n        ...IssueListItem_issue\n        ...StatusSelector_issue\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment StatusSelector_issue on issues {\n  nodeId\n  status\n}\n"
   }
 };
 })();

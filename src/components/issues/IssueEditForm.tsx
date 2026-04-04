@@ -235,6 +235,7 @@ export function IssueEditForm({ issueRef }: { issueRef: IssueEditForm_issue$key 
           ref={titleRef}
           defaultValue={issue.title}
           onChange={markDirty}
+          autoComplete="off"
           className="border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-[#ffc008]"
         />
         {errors.title && <p className="text-xs text-red-500">{errors.title}</p>}

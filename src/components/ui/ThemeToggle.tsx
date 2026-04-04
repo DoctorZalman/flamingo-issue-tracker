@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 function getInitialDark(): boolean {
-  if (typeof window === "undefined") return false;
+  if (typeof window === "undefined") return true;
   return document.documentElement.classList.contains("dark");
 }
 

@@ -15,7 +15,7 @@ const fragment = graphql`
   fragment IssueList_query on Query
   @refetchable(queryName: "IssueListPaginationQuery")
   @argumentDefinitions(
-    first: { type: "Int", defaultValue: 3 }
+    first: { type: "Int", defaultValue: 5 }
     after: { type: "Cursor" }
     filter: { type: "issuesFilter" }
   ) {
@@ -28,6 +28,7 @@ const fragment = graphql`
       edges {
         node {
           nodeId
+          id
           issue_labelsCollection {
             edges {
               node {
@@ -71,7 +72,7 @@ export function IssueList({
   const hasNextPage = data.issuesCollection?.pageInfo.hasNextPage ?? false;
 
   const initialNodeIds = allEdges.map((edge: Edge) => ({
-    uuid: edge.node.nodeId.replace("issues:", ""),
+    uuid: edge.node.id,
     nodeId: edge.node.nodeId,
   }));
 
@@ -85,7 +86,7 @@ export function IssueList({
         edges.map((edge: Edge) => (
           <div
             key={edge.node.nodeId}
-            className="flex items-center border-b border-gray-200 dark:border-gray-700 last:border-0 transition-all duration-200 md:hover:[box-shadow:inset_3px_0_0_#ffc008] md:hover:bg-[#ffc008]/10"
+            className="flex items-center border-b border-gray-200 dark:border-gray-700 last:border-0 transition-all duration-200 md:hover:[box-shadow:inset_3px_0_0_#ffc008] md:hover:bg-[#ffc008]/10 animate-[fadeIn_0.5s_ease-out]"
           >
             <div className="flex-1">
               <IssueListItem issueRef={edge.node} />

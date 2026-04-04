@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 
 interface AvatarProps {
@@ -10,13 +9,12 @@ interface AvatarProps {
 
 export function Avatar({ name, avatarUrl }: AvatarProps) {
   const [imgError, setImgError] = useState(false);
-
   const showImage = avatarUrl && !imgError;
 
   return (
     <div className="flex items-center gap-2">
       {showImage ? (
-        <Image
+        <img
           src={avatarUrl}
           alt={name}
           width={24}

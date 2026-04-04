@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a16a199d914902bcdaf66483d78f0210>>
+ * @generated SignedSource<<4bb9a67d712b24f7295f9dba8731c172>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -84,7 +84,7 @@ var v0 = [
     "name": "filter"
   },
   {
-    "defaultValue": 3,
+    "defaultValue": 5,
     "kind": "LocalArgument",
     "name": "first"
   }
@@ -190,6 +190,7 @@ return {
                 "plural": false,
                 "selections": [
                   (v5/*: any*/),
+                  (v6/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -252,7 +253,6 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v6/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -357,16 +357,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "42f5172596bb2f0c28fda92413a3c0ed",
+    "cacheID": "f9ac5f0895eceed6e4b7fd3bc5ad9216",
     "id": null,
     "metadata": {},
     "name": "IssueListPaginationQuery",
     "operationKind": "query",
-    "text": "query IssueListPaginationQuery(\n  $after: Cursor\n  $filter: issuesFilter\n  $first: Int = 3\n) {\n  ...IssueList_query_G9cLv\n}\n\nfragment IssueListItem_issue on issues {\n  nodeId\n  id\n  title\n  priority\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n}\n\nfragment IssueList_query_G9cLv on Query {\n  issuesCollection(first: $first, after: $after, filter: $filter, orderBy: [{created_at: DescNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        issue_labelsCollection {\n          edges {\n            node {\n              label_id\n              nodeId\n            }\n          }\n        }\n        ...IssueListItem_issue\n        ...StatusSelector_issue\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment StatusSelector_issue on issues {\n  nodeId\n  status\n}\n"
+    "text": "query IssueListPaginationQuery(\n  $after: Cursor\n  $filter: issuesFilter\n  $first: Int = 5\n) {\n  ...IssueList_query_G9cLv\n}\n\nfragment IssueListItem_issue on issues {\n  nodeId\n  id\n  title\n  priority\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n}\n\nfragment IssueList_query_G9cLv on Query {\n  issuesCollection(first: $first, after: $after, filter: $filter, orderBy: [{created_at: DescNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        id\n        issue_labelsCollection {\n          edges {\n            node {\n              label_id\n              nodeId\n            }\n          }\n        }\n        ...IssueListItem_issue\n        ...StatusSelector_issue\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment StatusSelector_issue on issues {\n  nodeId\n  status\n}\n"
   }
 };
 })();
 
-(node as any).hash = "fa86064e51fc20a91986f15fe066d32e";
+(node as any).hash = "eb1a0dfd695f82a794f3755c94389687";
 
 export default node;

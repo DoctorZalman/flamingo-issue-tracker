@@ -47,8 +47,9 @@ export function useRealtimeIssues(initialNodeIds: { uuid: string; nodeId: string
     function handleInsert(issue: IssuePayload) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       commitLocalUpdate(environment, (store: any) => {
-        const nodeId = `issues:${issue.id}`;
-        uuidToNodeId.set(issue.id, nodeId);
+        // Check if record already exists by uuid
+        const existingNodeId = uuidToNodeId.get(issue.id);
+        if (existingNodeId && store.get(existingNodeId)) return;
 
         const root = store.getRoot();
         const connection = ConnectionHandler.getConnection(
@@ -57,12 +58,12 @@ export function useRealtimeIssues(initialNodeIds: { uuid: string; nodeId: string
         );
         if (!connection) return;
 
-        // Avoid duplicate inserts
-        const existing = store.get(nodeId);
-        if (existing) return;
+        // Use uuid as temp nodeId until Relay assigns real one
+        const tempNodeId = `issues:${issue.id}`;
+        uuidToNodeId.set(issue.id, tempNodeId);
 
-        const record = store.create(nodeId, "issues");
-        record.setValue(nodeId, "nodeId");
+        const record = store.create(tempNodeId, "issues");
+        record.setValue(tempNodeId, "nodeId");
         record.setValue(issue.id, "id");
         record.setValue(issue.title, "title");
         record.setValue(issue.status, "status");
