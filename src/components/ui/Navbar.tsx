@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { ThemeToggle } from "./ThemeToggle"
 
 export function Navbar() {
@@ -7,7 +8,12 @@ export function Navbar() {
         className="max-w-4xl mx-auto px-8 py-3 flex items-center justify-between"
         aria-label="Main navigation"
       >
-        <span className="font-semibold text-gray-900 dark:text-white">🦩 Flamingo</span>
+        <Link
+          href="/issues"
+          className="font-semibold text-gray-900 dark:text-white hover:opacity-75 transition-opacity"
+        >
+          🦩 Flamingo
+        </Link>
         <ThemeToggle />
       </nav>
     </header>

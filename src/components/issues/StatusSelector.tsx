@@ -3,9 +3,9 @@
 import { useFragment, useMutation } from "react-relay"
 import { graphql } from "relay-runtime"
 import { toast } from "sonner"
-import type { StatusSelector_issue$key } from "@/__generated__/StatusSelector_issue.graphql"
+import { Select } from "@/components/ui/Select"
 
-const STATUS_OPTIONS = ["todo", "in_progress", "done"] as const
+import type { StatusSelector_issue$key } from "@/__generated__/StatusSelector_issue.graphql"
 
 const fragment = graphql`
   fragment StatusSelector_issue on issues {
@@ -24,6 +24,12 @@ const mutation = graphql`
     }
   }
 `
+
+const STATUS_OPTIONS = [
+  { value: "todo", label: "todo" },
+  { value: "in_progress", label: "in progress" },
+  { value: "done", label: "done" },
+]
 
 export function StatusSelector({ issueRef }: { issueRef: StatusSelector_issue$key }) {
   const issue = useFragment(fragment, issueRef)
@@ -45,18 +51,11 @@ export function StatusSelector({ issueRef }: { issueRef: StatusSelector_issue$ke
   }
 
   return (
-    <select
+    <Select
       value={issue.status}
+      options={STATUS_OPTIONS}
       onChange={handleChange}
       disabled={isInFlight}
-      onClick={(e) => e.preventDefault()}
-      className="text-xs border border-gray-200 rounded px-2 py-1 bg-white disabled:opacity-50"
-    >
-      {STATUS_OPTIONS.map((s) => (
-        <option key={s} value={s}>
-          {s.replace("_", " ")}
-        </option>
-      ))}
-    </select>
+    />
   )
 }

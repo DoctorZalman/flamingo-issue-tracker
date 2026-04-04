@@ -1,14 +1,26 @@
 "use client"
 
-const STATUS_OPTIONS = ["", "todo", "in_progress", "done"] as const
-const PRIORITY_OPTIONS = ["", "low", "medium", "high"] as const
-
 interface IssueFiltersProps {
   status: string
   priority: string
   onStatusChange: (value: string) => void
   onPriorityChange: (value: string) => void
 }
+import { Select } from "@/components/ui/Select"
+
+const STATUS_OPTIONS = [
+  { value: "", label: "All statuses" },
+  { value: "todo", label: "todo" },
+  { value: "in_progress", label: "in progress" },
+  { value: "done", label: "done" },
+]
+
+const PRIORITY_OPTIONS = [
+  { value: "", label: "All priorities" },
+  { value: "low", label: "low" },
+  { value: "medium", label: "medium" },
+  { value: "high", label: "high" },
+]
 
 export function IssueFilters({
   status,
@@ -18,31 +30,16 @@ export function IssueFilters({
 }: IssueFiltersProps) {
   return (
     <div className="flex gap-3 mb-4">
-      <select
+      <Select
         value={status}
+        options={STATUS_OPTIONS}
         onChange={(e) => onStatusChange(e.target.value)}
-        className="text-sm border border-gray-200 rounded px-3 py-1.5 bg-white"
-      >
-        <option value="">All statuses</option>
-        {STATUS_OPTIONS.filter(Boolean).map((s) => (
-          <option key={s} value={s}>
-            {s.replace("_", " ")}
-          </option>
-        ))}
-      </select>
-
-      <select
+      />
+      <Select
         value={priority}
+        options={PRIORITY_OPTIONS}
         onChange={(e) => onPriorityChange(e.target.value)}
-        className="text-sm border border-gray-200 rounded px-3 py-1.5 bg-white"
-      >
-        <option value="">All priorities</option>
-        {PRIORITY_OPTIONS.filter(Boolean).map((p) => (
-          <option key={p} value={p}>
-            {p}
-          </option>
-        ))}
-      </select>
+      />
     </div>
   )
 }

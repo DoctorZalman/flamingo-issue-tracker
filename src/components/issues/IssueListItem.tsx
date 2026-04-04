@@ -38,10 +38,10 @@ export function IssueListItem({ issueRef }: { issueRef: IssueListItem_issue$key 
   return (
     <Link
       href={`/issues/${issue.id}`}
-      className="flex items-center justify-between p-4 border-b border-gray-200 hover:bg-gray-50 transition-colors"
+      className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
     >
       <div className="flex flex-col gap-1">
-        <span className="font-medium text-gray-900">{issue.title}</span>
+        <span className="font-medium text-gray-900 dark:text-white">{issue.title}</span>{" "}
         {issue.users && <span className="text-xs text-gray-500">{issue.users.name}</span>}
         <div className="flex gap-2">
           {issue.issue_labelsCollection?.edges.map((edge: LabelEdge) => (
@@ -56,7 +56,9 @@ export function IssueListItem({ issueRef }: { issueRef: IssueListItem_issue$key 
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <span className="text-xs text-gray-500 capitalize">{issue.priority}</span>
+        <span className="text-xs text-gray-500 dark:text-gray-400 capitalize">
+          {issue.priority}
+        </span>
       </div>
     </Link>
   )
