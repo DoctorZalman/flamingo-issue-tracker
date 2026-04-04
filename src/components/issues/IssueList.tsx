@@ -1,12 +1,13 @@
 "use client"
 
+import { useEffect } from "react"
 import { usePaginationFragment } from "react-relay"
 import { graphql } from "relay-runtime"
 import type { IssueList_query$key } from "@/__generated__/IssueList_query.graphql"
+import type { IssueList_query$data } from "@/__generated__/IssueList_query.graphql"
 import { IssueListItem } from "./IssueListItem"
 import { StatusSelector } from "./StatusSelector"
-
-import type { IssueList_query$data } from "@/__generated__/IssueList_query.graphql"
+import { useRealtimeIssues } from "@/hooks/useRealtimeIssues"
 
 type Edge = NonNullable<IssueList_query$data["issuesCollection"]>["edges"][number]
 
@@ -45,14 +46,24 @@ export function IssueList({ queryRef }: { queryRef: IssueList_query$key }) {
   const edges = data.issuesCollection?.edges ?? []
   const hasNextPage = data.issuesCollection?.pageInfo.hasNextPage ?? false
 
+  // Seed realtime map with records from initial query
+  const initialNodeIds = edges.map((edge: Edge) => ({
+    uuid: edge.node.nodeId.replace("issues:", ""),
+    nodeId: edge.node.nodeId,
+  }))
+
+  useRealtimeIssues(initialNodeIds)
+
   return (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900">
-      {" "}
       {edges.length === 0 ? (
         <p className="p-8 text-center text-gray-500 dark:text-gray-400">No issues found</p>
       ) : (
         edges.map((edge: Edge) => (
-          <div key={edge.node.nodeId} className="flex items-center">
+          <div
+            key={edge.node.nodeId}
+            className="flex items-center border-b border-gray-200 dark:border-gray-700 last:border-0"
+          >
             <div className="flex-1">
               <IssueListItem issueRef={edge.node} />
             </div>
