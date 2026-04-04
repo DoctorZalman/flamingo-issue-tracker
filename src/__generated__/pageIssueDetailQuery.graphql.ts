@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dbd7b32913dcf94fd4bad8029503f109>>
+ * @generated SignedSource<<2fd340f519a9ef04387ccdca105f6103>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -101,7 +101,14 @@ v5 = {
   ],
   "storageKey": null
 },
-v6 = [
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v7 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -239,13 +246,7 @@ return {
                                 "name": "labels",
                                 "plural": false,
                                 "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "id",
-                                    "storageKey": null
-                                  },
+                                  (v6/*: any*/),
                                   (v4/*: any*/),
                                   {
                                     "alias": null,
@@ -258,7 +259,14 @@ return {
                                 ],
                                 "storageKey": null
                               },
-                              (v2/*: any*/)
+                              (v2/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "label_id",
+                                "storageKey": null
+                              }
                             ],
                             "storageKey": null
                           }
@@ -268,6 +276,7 @@ return {
                     ],
                     "storageKey": null
                   },
+                  (v6/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -298,7 +307,7 @@ return {
                   },
                   {
                     "alias": null,
-                    "args": (v6/*: any*/),
+                    "args": (v7/*: any*/),
                     "concreteType": "commentsConnection",
                     "kind": "LinkedField",
                     "name": "commentsCollection",
@@ -380,7 +389,7 @@ return {
                   },
                   {
                     "alias": null,
-                    "args": (v6/*: any*/),
+                    "args": (v7/*: any*/),
                     "filters": [
                       "orderBy"
                     ],
@@ -401,12 +410,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e3f4da5114127db6d269fc8762e3e3b2",
+    "cacheID": "b1985fbe744710da11395e007122a83d",
     "id": null,
     "metadata": {},
     "name": "pageIssueDetailQuery",
     "operationKind": "query",
-    "text": "query pageIssueDetailQuery(\n  $id: UUID!\n) {\n  issuesCollection(filter: {id: {eq: $id}}, first: 1) {\n    edges {\n      node {\n        nodeId\n        ...IssueDetail_issue\n      }\n    }\n  }\n}\n\nfragment CommentItem_comment on comments {\n  nodeId\n  body\n  created_at\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n}\n\nfragment CommentThread_issue on issues {\n  nodeId\n  commentsCollection(first: 5, orderBy: [{created_at: AscNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...CommentItem_comment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment IssueDetail_issue on issues {\n  nodeId\n  title\n  created_at\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n  ...IssueEditForm_issue\n  ...CommentThread_issue\n}\n\nfragment IssueEditForm_issue on issues {\n  nodeId\n  title\n  description\n  status\n  priority\n  assignee_id\n}\n"
+    "text": "query pageIssueDetailQuery(\n  $id: UUID!\n) {\n  issuesCollection(filter: {id: {eq: $id}}, first: 1) {\n    edges {\n      node {\n        nodeId\n        ...IssueDetail_issue\n      }\n    }\n  }\n}\n\nfragment CommentItem_comment on comments {\n  nodeId\n  body\n  created_at\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n}\n\nfragment CommentThread_issue on issues {\n  nodeId\n  commentsCollection(first: 5, orderBy: [{created_at: AscNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...CommentItem_comment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment IssueDetail_issue on issues {\n  nodeId\n  title\n  created_at\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n  ...IssueEditForm_issue\n  ...CommentThread_issue\n}\n\nfragment IssueEditForm_issue on issues {\n  nodeId\n  id\n  title\n  description\n  status\n  priority\n  assignee_id\n  issue_labelsCollection {\n    edges {\n      node {\n        label_id\n        nodeId\n      }\n    }\n  }\n}\n"
   }
 };
 })();

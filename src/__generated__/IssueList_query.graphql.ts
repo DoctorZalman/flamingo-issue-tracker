@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1b83a7e272b702443e947b91ed2b406f>>
+ * @generated SignedSource<<b7c4a84675ad0e1236ae67c9dee10b0f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,14 @@ export type IssueList_query$data = {
   readonly issuesCollection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly id: string;
+        readonly issue_labelsCollection: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly label_id: string;
+            };
+          }>;
+        } | null | undefined;
         readonly nodeId: string;
         readonly " $fragmentSpreads": FragmentRefs<"IssueListItem_issue" | "StatusSelector_issue">;
       };
@@ -49,7 +57,7 @@ return {
       "name": "filter"
     },
     {
-      "defaultValue": 3,
+      "defaultValue": 5,
       "kind": "LocalArgument",
       "name": "first"
     }
@@ -126,6 +134,53 @@ return {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "issue_labelsConnection",
+                  "kind": "LinkedField",
+                  "name": "issue_labelsCollection",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "issue_labelsEdge",
+                      "kind": "LinkedField",
+                      "name": "edges",
+                      "plural": true,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "issue_labels",
+                          "kind": "LinkedField",
+                          "name": "node",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "label_id",
+                              "storageKey": null
+                            }
+                          ],
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "IssueListItem_issue"
@@ -189,6 +244,6 @@ return {
 };
 })();
 
-(node as any).hash = "2a493e3da6cb8e5e179a2c74f165aa4c";
+(node as any).hash = "eb1a0dfd695f82a794f3755c94389687";
 
 export default node;

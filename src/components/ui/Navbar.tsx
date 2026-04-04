@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { ThemeToggle } from "./ThemeToggle"
-import { ROUTES } from "@/lib/routes"
+import Link from "next/link";
+import { ThemeToggle } from "./ThemeToggle";
+import { ROUTES } from "@/lib/routes";
 
 export function Navbar() {
   return (
@@ -19,5 +19,5 @@ export function Navbar() {
         <ThemeToggle />
       </nav>
     </header>
-  )
+  );
 }

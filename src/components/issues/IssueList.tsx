@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import { usePaginationFragment } from "react-relay"
-import { graphql } from "relay-runtime"
-import type { IssueList_query$key } from "@/__generated__/IssueList_query.graphql"
-import type { IssueList_query$data } from "@/__generated__/IssueList_query.graphql"
-import { IssueListItem } from "./IssueListItem"
-import { StatusSelector } from "./StatusSelector"
-import { useRealtimeIssues } from "@/hooks/useRealtimeIssues"
-import { Button } from "@/components/ui/Button"
+import { usePaginationFragment } from "react-relay";
+import { graphql } from "relay-runtime";
+import type { IssueList_query$key } from "@/__generated__/IssueList_query.graphql";
+import type { IssueList_query$data } from "@/__generated__/IssueList_query.graphql";
+import { IssueListItem } from "./IssueListItem";
+import { StatusSelector } from "./StatusSelector";
+import { registerNodeId } from "@/hooks/useRealtimeIssues";
+import { Button } from "@/components/ui/Button";
 
-type Edge = NonNullable<IssueList_query$data["issuesCollection"]>["edges"][number]
+type Edge = NonNullable<IssueList_query$data["issuesCollection"]>["edges"][number];
 
 const fragment = graphql`
   fragment IssueList_query on Query
   @refetchable(queryName: "IssueListPaginationQuery")
   @argumentDefinitions(
-    first: { type: "Int", defaultValue: 3 }
+    first: { type: "Int", defaultValue: 5 }
     after: { type: "Cursor" }
     filter: { type: "issuesFilter" }
   ) {
@@ -28,6 +28,14 @@ const fragment = graphql`
       edges {
         node {
           nodeId
+          id
+          issue_labelsCollection {
+            edges {
+              node {
+                label_id
+              }
+            }
+          }
           ...IssueListItem_issue
           ...StatusSelector_issue
         }
@@ -38,21 +46,34 @@ const fragment = graphql`
       }
     }
   }
-`
+`;
 
-export function IssueList({ queryRef }: { queryRef: IssueList_query$key }) {
-  const { data, loadNext, isLoadingNext } = usePaginationFragment(fragment, queryRef)
+export function IssueList({
+  queryRef,
+  selectedLabelIds,
+}: {
+  queryRef: IssueList_query$key;
+  selectedLabelIds: Set<string>;
+}) {
+  const { data, loadNext, isLoadingNext } = usePaginationFragment(fragment, queryRef);
 
-  const edges = data.issuesCollection?.edges ?? []
-  const hasNextPage = data.issuesCollection?.pageInfo.hasNextPage ?? false
+  const allEdges = data.issuesCollection?.edges ?? [];
 
-  // Seed realtime map with records from initial query
-  const initialNodeIds = edges.map((edge: Edge) => ({
-    uuid: edge.node.nodeId.replace("issues:", ""),
-    nodeId: edge.node.nodeId,
-  }))
+  allEdges.forEach((edge: Edge) => {
+    registerNodeId(edge.node.id, edge.node.nodeId);
+  });
 
-  useRealtimeIssues(initialNodeIds)
+  // Client-side label filter
+  const edges =
+    selectedLabelIds.size === 0
+      ? allEdges
+      : allEdges.filter((edge: Edge) => {
+          const issueLabelIds =
+            edge.node.issue_labelsCollection?.edges.map((e) => e.node.label_id as string) ?? [];
+          return Array.from(selectedLabelIds).every((id) => issueLabelIds.includes(id));
+        });
+
+  const hasNextPage = data.issuesCollection?.pageInfo.hasNextPage ?? false;
 
   return (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900">
@@ -62,7 +83,7 @@ export function IssueList({ queryRef }: { queryRef: IssueList_query$key }) {
         edges.map((edge: Edge) => (
           <div
             key={edge.node.nodeId}
-            className="flex items-center border-b border-gray-200 dark:border-gray-700 last:border-0 transition-all duration-200 md:hover:[box-shadow:inset_3px_0_0_#ffc008] md:hover:bg-[#ffc008]/10"
+            className="flex items-center border-b border-gray-200 dark:border-gray-700 last:border-0 transition-all duration-200 md:hover:[box-shadow:inset_3px_0_0_#ffc008] md:hover:bg-[#ffc008]/10 animate-[fadeIn_0.5s_ease-out]"
           >
             <div className="flex-1">
               <IssueListItem issueRef={edge.node} />
@@ -81,5 +102,5 @@ export function IssueList({ queryRef }: { queryRef: IssueList_query$key }) {
         </div>
       )}
     </div>
-  )
+  );
 }

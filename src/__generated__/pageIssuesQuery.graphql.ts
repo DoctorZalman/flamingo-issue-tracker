@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0e2213f97006e8131041addf542f6444>>
+ * @generated SignedSource<<5f36b520ea657a53902c5adc19cd9bef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -87,7 +87,7 @@ v2 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 3
+    "value": 5
   },
   {
     "kind": "Literal",
@@ -173,6 +173,68 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "concreteType": "issue_labelsConnection",
+                    "kind": "LinkedField",
+                    "name": "issue_labelsCollection",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "issue_labelsEdge",
+                        "kind": "LinkedField",
+                        "name": "edges",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "issue_labels",
+                            "kind": "LinkedField",
+                            "name": "node",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "label_id",
+                                "storageKey": null
+                              },
+                              (v3/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "labels",
+                                "kind": "LinkedField",
+                                "name": "labels",
+                                "plural": false,
+                                "selections": [
+                                  (v4/*: any*/),
+                                  (v5/*: any*/),
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "color",
+                                    "storageKey": null
+                                  },
+                                  (v3/*: any*/)
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "kind": "ScalarField",
                     "name": "title",
                     "storageKey": null
@@ -201,61 +263,6 @@ return {
                         "storageKey": null
                       },
                       (v3/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "issue_labelsConnection",
-                    "kind": "LinkedField",
-                    "name": "issue_labelsCollection",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "issue_labelsEdge",
-                        "kind": "LinkedField",
-                        "name": "edges",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "issue_labels",
-                            "kind": "LinkedField",
-                            "name": "node",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "labels",
-                                "kind": "LinkedField",
-                                "name": "labels",
-                                "plural": false,
-                                "selections": [
-                                  (v4/*: any*/),
-                                  (v5/*: any*/),
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "color",
-                                    "storageKey": null
-                                  },
-                                  (v3/*: any*/)
-                                ],
-                                "storageKey": null
-                              },
-                              (v3/*: any*/)
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
                     ],
                     "storageKey": null
                   },
@@ -329,12 +336,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8e8bb66aa7ee74fe7c3f57eb8677cb06",
+    "cacheID": "7bf5d2e985b0dd8246eaaf2f802ff946",
     "id": null,
     "metadata": {},
     "name": "pageIssuesQuery",
     "operationKind": "query",
-    "text": "query pageIssuesQuery(\n  $filter: issuesFilter\n) {\n  ...IssueList_query_Vt7Yj\n}\n\nfragment IssueListItem_issue on issues {\n  nodeId\n  id\n  title\n  priority\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n}\n\nfragment IssueList_query_Vt7Yj on Query {\n  issuesCollection(first: 3, filter: $filter, orderBy: [{created_at: DescNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...IssueListItem_issue\n        ...StatusSelector_issue\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment StatusSelector_issue on issues {\n  nodeId\n  status\n}\n"
+    "text": "query pageIssuesQuery(\n  $filter: issuesFilter\n) {\n  ...IssueList_query_Vt7Yj\n}\n\nfragment IssueListItem_issue on issues {\n  nodeId\n  id\n  title\n  priority\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n}\n\nfragment IssueList_query_Vt7Yj on Query {\n  issuesCollection(first: 5, filter: $filter, orderBy: [{created_at: DescNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        id\n        issue_labelsCollection {\n          edges {\n            node {\n              label_id\n              nodeId\n            }\n          }\n        }\n        ...IssueListItem_issue\n        ...StatusSelector_issue\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment StatusSelector_issue on issues {\n  nodeId\n  status\n}\n"
   }
 };
 })();

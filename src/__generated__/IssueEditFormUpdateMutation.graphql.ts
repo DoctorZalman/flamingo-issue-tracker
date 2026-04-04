@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a73ea586fcb69970d867f3775676f83b>>
+ * @generated SignedSource<<38a86c3963fb8de6982b36ab8d04c1fb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,16 +9,18 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
-export type IssueEditFormMutation$variables = {
+export type IssueEditFormUpdateMutation$variables = {
+  assigneeId?: string | null | undefined;
   description?: string | null | undefined;
   nodeId: string;
   priority: string;
   status: string;
   title: string;
 };
-export type IssueEditFormMutation$data = {
+export type IssueEditFormUpdateMutation$data = {
   readonly updateissuesCollection: {
     readonly records: ReadonlyArray<{
+      readonly assignee_id: string | null | undefined;
       readonly description: string | null | undefined;
       readonly nodeId: string;
       readonly priority: string;
@@ -27,38 +29,43 @@ export type IssueEditFormMutation$data = {
     }>;
   };
 };
-export type IssueEditFormMutation = {
-  response: IssueEditFormMutation$data;
-  variables: IssueEditFormMutation$variables;
+export type IssueEditFormUpdateMutation = {
+  response: IssueEditFormUpdateMutation$data;
+  variables: IssueEditFormUpdateMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "description"
+  "name": "assigneeId"
 },
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "nodeId"
+  "name": "description"
 },
 v2 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "priority"
+  "name": "nodeId"
 },
 v3 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "status"
+  "name": "priority"
 },
 v4 = {
   "defaultValue": null,
   "kind": "LocalArgument",
+  "name": "status"
+},
+v5 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
   "name": "title"
 },
-v5 = [
+v6 = [
   {
     "alias": null,
     "args": [
@@ -81,6 +88,11 @@ v5 = [
       },
       {
         "fields": [
+          {
+            "kind": "Variable",
+            "name": "assignee_id",
+            "variableName": "assigneeId"
+          },
           {
             "kind": "Variable",
             "name": "description",
@@ -153,6 +165,13 @@ v5 = [
             "kind": "ScalarField",
             "name": "priority",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "assignee_id",
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -168,39 +187,41 @@ return {
       (v1/*: any*/),
       (v2/*: any*/),
       (v3/*: any*/),
-      (v4/*: any*/)
+      (v4/*: any*/),
+      (v5/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "IssueEditFormMutation",
-    "selections": (v5/*: any*/),
+    "name": "IssueEditFormUpdateMutation",
+    "selections": (v6/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
+      (v2/*: any*/),
+      (v5/*: any*/),
       (v1/*: any*/),
       (v4/*: any*/),
-      (v0/*: any*/),
       (v3/*: any*/),
-      (v2/*: any*/)
+      (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "IssueEditFormMutation",
-    "selections": (v5/*: any*/)
+    "name": "IssueEditFormUpdateMutation",
+    "selections": (v6/*: any*/)
   },
   "params": {
-    "cacheID": "8e7cfc4cc947cfd66488ed45b8f48615",
+    "cacheID": "0c7dd74f6b4afb3ae88c52a61cb16b7f",
     "id": null,
     "metadata": {},
-    "name": "IssueEditFormMutation",
+    "name": "IssueEditFormUpdateMutation",
     "operationKind": "mutation",
-    "text": "mutation IssueEditFormMutation(\n  $nodeId: ID!\n  $title: String!\n  $description: String\n  $status: String!\n  $priority: String!\n) {\n  updateissuesCollection(filter: {nodeId: {eq: $nodeId}}, set: {title: $title, description: $description, status: $status, priority: $priority}) {\n    records {\n      nodeId\n      title\n      description\n      status\n      priority\n    }\n  }\n}\n"
+    "text": "mutation IssueEditFormUpdateMutation(\n  $nodeId: ID!\n  $title: String!\n  $description: String\n  $status: String!\n  $priority: String!\n  $assigneeId: UUID\n) {\n  updateissuesCollection(filter: {nodeId: {eq: $nodeId}}, set: {title: $title, description: $description, status: $status, priority: $priority, assignee_id: $assigneeId}) {\n    records {\n      nodeId\n      title\n      description\n      status\n      priority\n      assignee_id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "afd26677858901433b58c13f0ddcf9b5";
+(node as any).hash = "a20513c24bc836fe34741fee3be32555";
 
 export default node;

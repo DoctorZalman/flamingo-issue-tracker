@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { useFragment, useMutation } from "react-relay"
-import { graphql } from "relay-runtime"
-import { toast } from "sonner"
-import { Select } from "@/components/ui/Select"
+import { useFragment, useMutation } from "react-relay";
+import { graphql } from "relay-runtime";
+import { toast } from "sonner";
+import { Select } from "@/components/ui/Select";
 
-import type { StatusSelector_issue$key } from "@/__generated__/StatusSelector_issue.graphql"
+import type { StatusSelector_issue$key } from "@/__generated__/StatusSelector_issue.graphql";
 
 const fragment = graphql`
   fragment StatusSelector_issue on issues {
     nodeId
     status
   }
-`
+`;
 
 const mutation = graphql`
   mutation StatusSelectorMutation($nodeId: ID!, $status: String!) {
@@ -23,20 +23,20 @@ const mutation = graphql`
       }
     }
   }
-`
+`;
 
 const STATUS_OPTIONS = [
   { value: "todo", label: "todo" },
   { value: "in_progress", label: "in progress" },
   { value: "done", label: "done" },
-]
+];
 
 export function StatusSelector({ issueRef }: { issueRef: StatusSelector_issue$key }) {
-  const issue = useFragment(fragment, issueRef)
-  const [commit, isInFlight] = useMutation(mutation)
+  const issue = useFragment(fragment, issueRef);
+  const [commit, isInFlight] = useMutation(mutation);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newStatus = e.target.value
+    const newStatus = e.target.value;
 
     commit({
       variables: { nodeId: issue.nodeId, status: newStatus },
@@ -47,8 +47,8 @@ export function StatusSelector({ issueRef }: { issueRef: StatusSelector_issue$ke
         },
       },
       onError: () => toast.error("Failed to update status — changes reverted"),
-    })
-  }
+    });
+  };
 
   return (
     <Select
@@ -59,5 +59,5 @@ export function StatusSelector({ issueRef }: { issueRef: StatusSelector_issue$ke
       aria-label="status"
       name="status"
     />
-  )
+  );
 }

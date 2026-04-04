@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9a50508f8d57e7b8f9636c3e43f855ad>>
+ * @generated SignedSource<<354c76fc5e4c80508f572daa1081ddb3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,14 @@ import { FragmentRefs } from "relay-runtime";
 export type IssueEditForm_issue$data = {
   readonly assignee_id: string | null | undefined;
   readonly description: string | null | undefined;
+  readonly id: string;
+  readonly issue_labelsCollection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly label_id: string;
+      };
+    }>;
+  } | null | undefined;
   readonly nodeId: string;
   readonly priority: string;
   readonly status: string;
@@ -35,6 +43,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "nodeId",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
       "storageKey": null
     },
     {
@@ -71,12 +86,52 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "assignee_id",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "issue_labelsConnection",
+      "kind": "LinkedField",
+      "name": "issue_labelsCollection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "issue_labelsEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "issue_labels",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "label_id",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "issues",
   "abstractKey": null
 };
 
-(node as any).hash = "75adb04c4227a36529ec7722d908dd64";
+(node as any).hash = "52e8614132e8e6b404dad80366600372";
 
 export default node;

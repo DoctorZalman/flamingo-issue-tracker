@@ -1,40 +1,61 @@
-"use client"
+"use client";
 
-import { Suspense, useState } from "react"
-import { useLazyLoadQuery } from "react-relay"
-import { graphql } from "relay-runtime"
-import { IssueList } from "@/components/issues/IssueList"
-import { IssueFilters } from "@/components/issues/IssueFilters"
-import { IssueListSkeleton } from "@/components/ui/Skeleton"
-import { ErrorBoundary } from "@/components/ui/ErrorBoundary"
-import { Container } from "@/components/ui/Container"
+import { Suspense, useState } from "react";
+import { useLazyLoadQuery } from "react-relay";
+import { graphql } from "relay-runtime";
+import { IssueList } from "@/components/issues/IssueList";
+import { IssueFilters } from "@/components/issues/IssueFilters";
+import { IssueListSkeleton } from "@/components/ui/Skeleton";
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
+import { Container } from "@/components/ui/Container";
+import { useRealtimeIssues } from "@/hooks/useRealtimeIssues";
 
 const query = graphql`
   query pageIssuesQuery($filter: issuesFilter) {
     ...IssueList_query @arguments(filter: $filter)
   }
-`
+`;
 
 interface Filters {
-  status?: { eq: string }
-  priority?: { eq: string }
+  status?: { eq: string };
+  priority?: { eq: string };
 }
 
-function IssuesContent({ filter }: { filter: Filters | null }) {
-  const data = useLazyLoadQuery(query, { filter })
-  return <IssueList queryRef={data} />
+function IssuesContent({
+  filter,
+  selectedLabelIds,
+}: {
+  filter: Filters | null;
+  selectedLabelIds: Set<string>;
+}) {
+  const data = useLazyLoadQuery(query, { filter });
+  return <IssueList queryRef={data} selectedLabelIds={selectedLabelIds} />;
 }
 
 export default function IssuesPage() {
-  const [status, setStatus] = useState("")
-  const [priority, setPriority] = useState("")
+  useRealtimeIssues();
+  const [status, setStatus] = useState("");
+  const [priority, setPriority] = useState("");
+  const [selectedLabelIds, setSelectedLabelIds] = useState<Set<string>>(new Set());
 
   const buildFilter = (): Filters | null => {
-    const f: Filters = {}
-    if (status) f.status = { eq: status }
-    if (priority) f.priority = { eq: priority }
-    return Object.keys(f).length > 0 ? f : null
-  }
+    const f: Filters = {};
+    if (status) f.status = { eq: status };
+    if (priority) f.priority = { eq: priority };
+    return Object.keys(f).length > 0 ? f : null;
+  };
+
+  const toggleLabel = (id: string) => {
+    setSelectedLabelIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
 
   return (
     <main>
@@ -62,18 +83,20 @@ export default function IssuesPage() {
           </div>
         </div>
 
-        <IssueFilters
-          status={status}
-          priority={priority}
-          onStatusChange={setStatus}
-          onPriorityChange={setPriority}
-        />
         <ErrorBoundary>
           <Suspense fallback={<IssueListSkeleton />}>
-            <IssuesContent filter={buildFilter()} />
+            <IssueFilters
+              status={status}
+              priority={priority}
+              selectedLabelIds={selectedLabelIds}
+              onStatusChange={setStatus}
+              onPriorityChange={setPriority}
+              onLabelToggle={toggleLabel}
+            />
+            <IssuesContent filter={buildFilter()} selectedLabelIds={selectedLabelIds} />
           </Suspense>
         </ErrorBoundary>
       </Container>
     </main>
-  )
+  );
 }

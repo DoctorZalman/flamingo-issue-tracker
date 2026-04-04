@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { ROUTES } from "@/lib/routes"
+import Link from "next/link";
+import { ROUTES } from "@/lib/routes";
 
 export default function NotFound() {
   return (
@@ -16,5 +16,5 @@ export default function NotFound() {
         Back to Issues
       </Link>
     </main>
-  )
+  );
 }

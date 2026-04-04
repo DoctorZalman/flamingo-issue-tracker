@@ -43,7 +43,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 ### 3. Run database migrations
 
-Execute the SQL in `supabase/migrations.sql` in your Supabase **SQL Editor**.
+Execute the SQL migrations from the project setup guide in your Supabase **SQL Editor**. The migrations create the following tables: `users`, `issues`, `comments`, `labels`, `issue_labels`.
 
 ### 4. Introspect GraphQL schema
 
@@ -99,16 +99,16 @@ module.exports = {
     Datetime: "string",
     Cursor: "string",
   },
-}
+};
 ```
 
 ### Key config — `getDataID` override in `environment.ts`
 
 ```ts
 getDataID: (node) => {
-  if (typeof node.nodeId === "string") return node.nodeId
-  return node.id as string
-}
+  if (typeof node.nodeId === "string") return node.nodeId;
+  return node.id as string;
+};
 ```
 
 Every fragment includes `nodeId` as the Relay record identity key.
@@ -131,7 +131,25 @@ Every fragment includes `nodeId` as the Relay record identity key.
 
 **Route constants** — all internal routes are defined in `src/lib/routes.ts` to avoid hardcoded strings across the codebase.
 
-**Dark mode** — class-based (`darkMode: 'class'`) with a blocking inline script in `layout.tsx` to apply the saved theme before hydration, preventing flash.
+**Dark mode** — class-based via `tailwind.config.ts` (`darkMode: 'class'`) with a blocking inline script in `layout.tsx` to apply the saved theme before hydration, preventing flash.
+
+---
+
+## Real-Time
+
+Issue list reflects changes from other users without manual refresh using Supabase Realtime + `commitLocalUpdate`.
+
+**Scope:** Real-time sync is implemented for the issue list (`/issues`) only. The detail page (`/issues/[id]`) does not receive live updates — changes made in another tab will be visible after navigation back to the list or a manual refresh.
+
+**How it works:**
+
+- `useRealtimeIssues` hook subscribes to `postgres_changes` on the `issues` table
+- INSERT → creates a new Relay store record and prepends an edge to the connection
+- UPDATE → finds the existing record by UUID and patches changed fields
+- DELETE → removes the edge from the connection
+- The hook is mounted at page level (`/issues/page.tsx`) to survive list re-renders
+- A module-level `Map<uuid, nodeId>` bridges Supabase UUID payloads to Relay's base64 nodeIds
+- `registerNodeId()` is called from `IssueList` to seed the map on initial load
 
 ---
 
@@ -162,13 +180,15 @@ Tests run automatically on `git push` via Husky.
 
 **Create issue flow** — there is no UI to create new issues. With more time I'd add a modal or inline form with optimistic insert into the Relay connection.
 
-**Label filtering** — currently client-side only. A proper implementation would pass label IDs as GraphQL filter variables to the server.
+**Label filtering** — client-side only. pg_graphql does not support nested relation filters on `issuesFilter`, so label filtering is done in-memory after fetching. A proper solution would require a custom SQL function or view exposed via pg_graphql.
+
+**Labels update strategy** — on save, all existing labels are deleted and re-inserted. A diff-based approach (delete removed, insert added) would be more efficient but adds complexity.
+
+**Real-time scope** — only the issue list has live updates. The detail page requires a manual refresh to see changes made by other users. Extending realtime to the detail page would require a separate Supabase channel subscription per issue.
 
 **Optimistic INSERT** — new issues from other tabs appear via Realtime, but locally created issues don't use optimistic insert. This would require generating a temporary `nodeId` on the client before the server responds.
 
-**Test coverage** — tests cover UI primitives and validation schemas. With more time I'd add Relay mock environment tests for data components (`IssueList`, `StatusSelector`) and integration tests for the realtime hook.
-
-**Pagination UX** — "Load more" button works but infinite scroll with an `IntersectionObserver` would be a better UX pattern for this type of list.
+**Test coverage** — tests cover UI primitives and validation schemas.
 
 **Error handling** — the Error Boundary catches render errors but network errors during mutations only show a toast. A more robust solution would include retry logic and per-field error states from the server.
 

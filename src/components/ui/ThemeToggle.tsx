@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
 
 function getInitialDark(): boolean {
-  if (typeof window === "undefined") return false
-  return document.documentElement.classList.contains("dark")
+  if (typeof window === "undefined") return true;
+  return document.documentElement.classList.contains("dark");
 }
 
 export function ThemeToggle() {
-  const [isDark, setIsDark] = useState<boolean>(getInitialDark)
+  const [isDark, setIsDark] = useState<boolean>(getInitialDark);
 
   const toggle = () => {
-    const next = !isDark
-    setIsDark(next)
-    document.documentElement.classList.toggle("dark", next)
-    localStorage.setItem("theme", next ? "dark" : "light")
-  }
+    const next = !isDark;
+    setIsDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    localStorage.setItem("theme", next ? "dark" : "light");
+  };
 
   return (
     <button
@@ -26,5 +26,5 @@ export function ThemeToggle() {
     >
       {isDark ? "☀️" : "🌙"}
     </button>
-  )
+  );
 }

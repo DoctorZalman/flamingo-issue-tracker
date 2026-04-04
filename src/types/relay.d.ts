@@ -1,2 +1,2 @@
-declare module "react-relay"
-declare module "relay-runtime"
+declare module "react-relay";
+declare module "relay-runtime";
