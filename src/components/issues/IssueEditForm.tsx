@@ -6,8 +6,10 @@ import { useRef, useState } from "react"
 import { toast } from "sonner"
 import type { IssueEditForm_issue$key } from "@/__generated__/IssueEditForm_issue.graphql"
 import { IssueEditSchema } from "@/lib/zod-schemas"
-import type { ZodIssue } from "zod"
 import { Select } from "@/components/ui/Select"
+import { Button } from "@/components/ui/Button"
+import { Label } from "@/components/ui/Label"
+import { Textarea } from "@/components/ui/Textarea"
 
 const STATUS_OPTIONS = [
   { value: "todo", label: "todo" },
@@ -98,76 +100,56 @@ export function IssueEditForm({ issueRef }: { issueRef: IssueEditForm_issue$key 
   return (
     <section aria-label="Edit issue" className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <label
-          htmlFor="issue-title"
-          className="text-sm font-medium text-gray-700 dark:text-gray-300"
-        >
-          Title
-        </label>
+        <Label htmlFor="issue-title">Title</Label>
         <input
           id="issue-title"
           ref={titleRef}
           defaultValue={issue.title}
-          className="border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-[#ffc008]"
         />
         {errors.title && <p className="text-xs text-red-500">{errors.title}</p>}
       </div>
 
       <div className="flex flex-col gap-1">
-        <label
-          htmlFor="issue-description"
-          className="text-sm font-medium text-gray-700 dark:text-gray-300"
-        >
-          Description
-        </label>
-        <textarea
+        <Label htmlFor="issue-description">Description</Label>
+        <Textarea
           id="issue-description"
           ref={descriptionRef}
           defaultValue={issue.description ?? ""}
           rows={4}
-          className="border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          placeholder="Add a description..."
         />
       </div>
 
       <div className="flex gap-4">
         <div className="flex flex-col gap-1 flex-1">
-          <label
-            htmlFor="issue-status"
-            className="text-sm font-medium text-gray-700 dark:text-gray-300"
-          >
-            Status
-          </label>
+          <Label htmlFor="issue-status">Status</Label>
           <Select
             id="issue-status"
             ref={statusRef}
             defaultValue={issue.status}
             options={STATUS_OPTIONS}
+            aria-label="status"
+            name="status"
           />
         </div>
 
         <div className="flex flex-col gap-1 flex-1">
-          <label
-            htmlFor="issue-priority"
-            className="text-sm font-medium text-gray-700 dark:text-gray-300"
-          >
-            Priority
-          </label>
+          <Label htmlFor="issue-priority">Priority</Label>
           <Select
             id="issue-priority"
             ref={priorityRef}
             defaultValue={issue.priority}
             options={PRIORITY_OPTIONS}
+            aria-label="priority"
+            name="priority"
           />
         </div>
       </div>
 
-      <button
-        onClick={handleSave}
-        disabled={isInFlight}
-        className="self-start px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg disabled:opacity-50 transition-colors"
-      >
+      <Button onClick={handleSave} disabled={isInFlight} className="self-start">
         {isInFlight ? "Saving..." : "Save changes"}
-      </button>
+      </Button>
     </section>
   )
 }

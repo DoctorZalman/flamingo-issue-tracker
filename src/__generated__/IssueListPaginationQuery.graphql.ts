@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61be52ac0f5c2efa3cc78762c3e09fb3>>
+ * @generated SignedSource<<3e0b15c7b89c9af8cdbf1e32037eb1de>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -84,7 +84,7 @@ var v0 = [
     "name": "filter"
   },
   {
-    "defaultValue": 10,
+    "defaultValue": 3,
     "kind": "LocalArgument",
     "name": "first"
   }
@@ -350,16 +350,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0bcc212d0500d5a6db61e69607db986c",
+    "cacheID": "de82396cfc5c905b303939f05f53182b",
     "id": null,
     "metadata": {},
     "name": "IssueListPaginationQuery",
     "operationKind": "query",
-    "text": "query IssueListPaginationQuery(\n  $after: Cursor\n  $filter: issuesFilter\n  $first: Int = 10\n) {\n  ...IssueList_query_G9cLv\n}\n\nfragment IssueListItem_issue on issues {\n  nodeId\n  id\n  title\n  priority\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n}\n\nfragment IssueList_query_G9cLv on Query {\n  issuesCollection(first: $first, after: $after, filter: $filter, orderBy: [{created_at: DescNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...IssueListItem_issue\n        ...StatusSelector_issue\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment StatusSelector_issue on issues {\n  nodeId\n  status\n}\n"
+    "text": "query IssueListPaginationQuery(\n  $after: Cursor\n  $filter: issuesFilter\n  $first: Int = 3\n) {\n  ...IssueList_query_G9cLv\n}\n\nfragment IssueListItem_issue on issues {\n  nodeId\n  id\n  title\n  priority\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n}\n\nfragment IssueList_query_G9cLv on Query {\n  issuesCollection(first: $first, after: $after, filter: $filter, orderBy: [{created_at: DescNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...IssueListItem_issue\n        ...StatusSelector_issue\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment StatusSelector_issue on issues {\n  nodeId\n  status\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2148038e0dff9fd8e18ca87d08d67f5a";
+(node as any).hash = "2a493e3da6cb8e5e179a2c74f165aa4c";
 
 export default node;

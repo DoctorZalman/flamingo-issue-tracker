@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect } from "react"
 import { usePaginationFragment } from "react-relay"
 import { graphql } from "relay-runtime"
 import type { IssueList_query$key } from "@/__generated__/IssueList_query.graphql"
@@ -8,6 +7,7 @@ import type { IssueList_query$data } from "@/__generated__/IssueList_query.graph
 import { IssueListItem } from "./IssueListItem"
 import { StatusSelector } from "./StatusSelector"
 import { useRealtimeIssues } from "@/hooks/useRealtimeIssues"
+import { Button } from "@/components/ui/Button"
 
 type Edge = NonNullable<IssueList_query$data["issuesCollection"]>["edges"][number]
 
@@ -15,7 +15,7 @@ const fragment = graphql`
   fragment IssueList_query on Query
   @refetchable(queryName: "IssueListPaginationQuery")
   @argumentDefinitions(
-    first: { type: "Int", defaultValue: 10 }
+    first: { type: "Int", defaultValue: 3 }
     after: { type: "Cursor" }
     filter: { type: "issuesFilter" }
   ) {
@@ -62,7 +62,7 @@ export function IssueList({ queryRef }: { queryRef: IssueList_query$key }) {
         edges.map((edge: Edge) => (
           <div
             key={edge.node.nodeId}
-            className="flex items-center border-b border-gray-200 dark:border-gray-700 last:border-0"
+            className="flex items-center border-b border-gray-200 dark:border-gray-700 last:border-0 transition-all duration-200 md:hover:[box-shadow:inset_3px_0_0_#ffc008] md:hover:bg-[#ffc008]/10"
           >
             <div className="flex-1">
               <IssueListItem issueRef={edge.node} />
@@ -75,13 +75,9 @@ export function IssueList({ queryRef }: { queryRef: IssueList_query$key }) {
       )}
       {hasNextPage && (
         <div className="p-4 text-center border-t border-gray-200 dark:border-gray-700">
-          <button
-            onClick={() => loadNext(10)}
-            disabled={isLoadingNext}
-            className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 disabled:opacity-50"
-          >
+          <Button onClick={() => loadNext(10)} disabled={isLoadingNext}>
             {isLoadingNext ? "Loading..." : "Load more"}
-          </button>
+          </Button>
         </div>
       )}
     </div>

@@ -34,11 +34,15 @@ export function IssueFilters({
         value={status}
         options={STATUS_OPTIONS}
         onChange={(e) => onStatusChange(e.target.value)}
+        aria-label="status"
+        name="status"
       />
       <Select
         value={priority}
         options={PRIORITY_OPTIONS}
         onChange={(e) => onPriorityChange(e.target.value)}
+        aria-label="priority"
+        name="priority"
       />
     </div>
   )

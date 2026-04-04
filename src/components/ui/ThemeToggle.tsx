@@ -20,7 +20,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="p-2 rounded-md border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+      className="p-2 rounded-md border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-[#ffc008] hover:bg-[#ffc008]/10 transition-colors cursor-pointer"
       aria-label="Toggle theme"
       suppressHydrationWarning
     >

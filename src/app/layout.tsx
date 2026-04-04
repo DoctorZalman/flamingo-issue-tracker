@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Geist, Geist_Mono, Azeret_Mono } from "next/font/google"
 import Script from "next/script"
 import { Toaster } from "sonner"
 import { RelayProvider } from "@/relay/RelayProvider"
@@ -17,11 +17,17 @@ export const metadata: Metadata = {
   },
 }
 
+const azeretMono = Azeret_Mono({
+  variable: "--font-azeret-mono",
+  subsets: ["latin"],
+  weight: ["400", "600"],
+})
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100`}
+        className={`${geistSans.variable} ${geistMono.variable} ${azeretMono.variable} antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-w-[375px]`}
       >
         <Script
           id="theme-init"
