@@ -82,7 +82,7 @@ const updateMutation = graphql`
 
 const deleteLabelsMutation = graphql`
   mutation IssueEditFormDeleteLabelsMutation($issueId: UUID!) {
-    deleteFromissue_labelsCollection(filter: { issue_id: { eq: $issueId } }) {
+    deleteFromissue_labelsCollection(filter: { issue_id: { eq: $issueId } }, atMost: 10) {
       records {
         issue_id
         label_id

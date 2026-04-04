@@ -52,6 +52,7 @@ export function IssueListItem({ issueRef }: { issueRef: IssueListItem_issue$key 
               key={edge.node.labels?.id}
               className="text-xs px-2 py-0.5 rounded-full text-white w-fit"
               style={{ backgroundColor: edge.node.labels?.color ?? "#6366f1" }}
+              suppressHydrationWarning
             >
               {edge.node.labels?.name}
             </span>

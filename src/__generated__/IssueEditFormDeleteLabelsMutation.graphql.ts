@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6633e082d8c4a82a67b9129ac29a8d2e>>
+ * @generated SignedSource<<73ecce990e75d4c2e9c580168f896758>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,11 @@ var v0 = [
   }
 ],
 v1 = [
+  {
+    "kind": "Literal",
+    "name": "atMost",
+    "value": 10
+  },
   {
     "fields": [
       {
@@ -141,16 +146,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "98b2e6e4909d4190ce27004e5d4dca07",
+    "cacheID": "f339f6ac334d16c40953090a15a510de",
     "id": null,
     "metadata": {},
     "name": "IssueEditFormDeleteLabelsMutation",
     "operationKind": "mutation",
-    "text": "mutation IssueEditFormDeleteLabelsMutation(\n  $issueId: UUID!\n) {\n  deleteFromissue_labelsCollection(filter: {issue_id: {eq: $issueId}}) {\n    records {\n      issue_id\n      label_id\n      nodeId\n    }\n  }\n}\n"
+    "text": "mutation IssueEditFormDeleteLabelsMutation(\n  $issueId: UUID!\n) {\n  deleteFromissue_labelsCollection(filter: {issue_id: {eq: $issueId}}, atMost: 10) {\n    records {\n      issue_id\n      label_id\n      nodeId\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "90b7e25c023743b8a15f98c3fc872e85";
+(node as any).hash = "1931f20bea399e521658edc67aa6d716";
 
 export default node;

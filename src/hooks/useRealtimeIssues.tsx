@@ -13,18 +13,16 @@ interface IssuePayload {
   created_at: string;
 }
 
-// Maps raw UUID → Relay nodeId for UPDATE/DELETE lookups
+// Module-level map persists across renders
 const uuidToNodeId = new Map<string, string>();
 
-export function useRealtimeIssues(initialNodeIds: { uuid: string; nodeId: string }[] = []) {
-  const environment = useRelayEnvironment();
+// Called from IssueList to register existing records
+export function registerNodeId(uuid: string, nodeId: string) {
+  uuidToNodeId.set(uuid, nodeId);
+}
 
-  // Seed the map with records from initial query load
-  useEffect(() => {
-    initialNodeIds.forEach(({ uuid, nodeId }) => {
-      uuidToNodeId.set(uuid, nodeId);
-    });
-  }, [initialNodeIds]);
+export function useRealtimeIssues() {
+  const environment = useRelayEnvironment();
 
   useEffect(() => {
     const channel = supabase

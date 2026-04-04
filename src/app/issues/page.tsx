@@ -8,6 +8,7 @@ import { IssueFilters } from "@/components/issues/IssueFilters";
 import { IssueListSkeleton } from "@/components/ui/Skeleton";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { Container } from "@/components/ui/Container";
+import { useRealtimeIssues } from "@/hooks/useRealtimeIssues";
 
 const query = graphql`
   query pageIssuesQuery($filter: issuesFilter) {
@@ -32,6 +33,7 @@ function IssuesContent({
 }
 
 export default function IssuesPage() {
+  useRealtimeIssues();
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
   const [selectedLabelIds, setSelectedLabelIds] = useState<Set<string>>(new Set());

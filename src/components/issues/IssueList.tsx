@@ -6,7 +6,7 @@ import type { IssueList_query$key } from "@/__generated__/IssueList_query.graphq
 import type { IssueList_query$data } from "@/__generated__/IssueList_query.graphql";
 import { IssueListItem } from "./IssueListItem";
 import { StatusSelector } from "./StatusSelector";
-import { useRealtimeIssues } from "@/hooks/useRealtimeIssues";
+import { registerNodeId } from "@/hooks/useRealtimeIssues";
 import { Button } from "@/components/ui/Button";
 
 type Edge = NonNullable<IssueList_query$data["issuesCollection"]>["edges"][number];
@@ -59,6 +59,10 @@ export function IssueList({
 
   const allEdges = data.issuesCollection?.edges ?? [];
 
+  allEdges.forEach((edge: Edge) => {
+    registerNodeId(edge.node.id, edge.node.nodeId);
+  });
+
   // Client-side label filter
   const edges =
     selectedLabelIds.size === 0
@@ -70,13 +74,6 @@ export function IssueList({
         });
 
   const hasNextPage = data.issuesCollection?.pageInfo.hasNextPage ?? false;
-
-  const initialNodeIds = allEdges.map((edge: Edge) => ({
-    uuid: edge.node.id,
-    nodeId: edge.node.nodeId,
-  }));
-
-  useRealtimeIssues(initialNodeIds);
 
   return (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900">
