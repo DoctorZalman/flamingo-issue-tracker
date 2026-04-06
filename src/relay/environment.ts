@@ -1,7 +1,9 @@
 import { Environment, Network, RecordSource, Store } from "relay-runtime";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const fetchFn = async (request: any, variables: any) => {
+const fetchFn = async (
+  request: { text?: string | null },
+  variables: Record<string, unknown>
+): Promise<unknown> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/graphql/v1`, {
     method: "POST",
     headers: {
@@ -10,6 +12,7 @@ const fetchFn = async (request: any, variables: any) => {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}`,
     },
     body: JSON.stringify({ query: request.text, variables }),
+    cache: "no-store",
   });
   return response.json();
 };
