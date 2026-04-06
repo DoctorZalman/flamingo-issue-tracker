@@ -47,6 +47,8 @@ const defaultProps = {
   onStatusChange: vi.fn(),
   onPriorityChange: vi.fn(),
   onLabelToggle: vi.fn(),
+  hasActiveFilters: false,
+  onClearFilters: vi.fn(),
 };
 
 describe("IssueFilters", () => {

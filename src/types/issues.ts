@@ -3,6 +3,7 @@ import type { IssueListItem_issue$data } from "@/__generated__/IssueListItem_iss
 import type { IssueDetail_issue$data } from "@/__generated__/IssueDetail_issue.graphql";
 import type { IssueEditForm_issue$data } from "@/__generated__/IssueEditForm_issue.graphql";
 import type { useIssueEditFormQuery$data } from "@/__generated__/useIssueEditFormQuery.graphql";
+import type { IssueFiltersQuery$data } from "@/__generated__/IssueFiltersQuery.graphql";
 
 export type IssueListEdge = NonNullable<IssueList_query$data["issuesCollection"]>["edges"][number];
 
@@ -24,4 +25,8 @@ export type IssueEditFormUserEdge = NonNullable<
 
 export type IssueEditFormAllLabelEdge = NonNullable<
   useIssueEditFormQuery$data["labelsCollection"]
+>["edges"][number];
+
+export type IssueFiltersLabelEdge = NonNullable<
+  IssueFiltersQuery$data["labelsCollection"]
 >["edges"][number];
