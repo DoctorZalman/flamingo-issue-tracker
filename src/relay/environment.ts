@@ -30,10 +30,15 @@ export function createEnvironment(): InstanceType<typeof Environment> {
 }
 
 export function getEnvironment(): InstanceType<typeof Environment> {
+  // Always create fresh environment on server to avoid stale cache
+  if (typeof window === "undefined") {
+    return createEnvironment();
+  }
+
+  // Singleton on client for optimistic updates
   if (!environment) environment = createEnvironment();
   return environment;
 }
-
 export function resetEnvironment(): void {
   environment = null;
 }

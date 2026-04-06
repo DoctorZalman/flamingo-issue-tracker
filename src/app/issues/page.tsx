@@ -41,6 +41,13 @@ export default function IssuesPage() {
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
   const [selectedLabelIds, setSelectedLabelIds] = useState<Set<string>>(new Set());
+  const hasActiveFilters = status !== "" || priority !== "" || selectedLabelIds.size > 0;
+
+  const clearFilters = () => {
+    setStatus("");
+    setPriority("");
+    setSelectedLabelIds(new Set());
+  };
 
   const buildFilter = (): Filters | null => {
     const f: Filters = {};
@@ -96,6 +103,8 @@ export default function IssuesPage() {
               onStatusChange={setStatus}
               onPriorityChange={setPriority}
               onLabelToggle={toggleLabel}
+              hasActiveFilters={hasActiveFilters}
+              onClearFilters={clearFilters}
             />
             <IssuesContent filter={buildFilter()} selectedLabelIds={selectedLabelIds} />
           </Suspense>

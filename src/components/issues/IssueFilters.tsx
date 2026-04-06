@@ -3,10 +3,8 @@
 import { useLazyLoadQuery } from "react-relay";
 import { graphql } from "relay-runtime";
 import { Select } from "@/components/ui/Select";
-import type { IssueFiltersQuery$data } from "@/__generated__/IssueFiltersQuery.graphql";
 import { PRIORITY_FILTER_OPTIONS, STATUS_FILTER_OPTIONS } from "@/lib/constants";
-
-type LabelEdge = NonNullable<IssueFiltersQuery$data["labelsCollection"]>["edges"][number];
+import { IssueFiltersLabelEdge } from "@/types/issues";
 
 const labelsQuery = graphql`
   query IssueFiltersQuery {
@@ -29,6 +27,8 @@ interface IssueFiltersProps {
   onStatusChange: (value: string) => void;
   onPriorityChange: (value: string) => void;
   onLabelToggle: (id: string) => void;
+  hasActiveFilters: boolean;
+  onClearFilters: () => void;
 }
 
 export function IssueFilters({
@@ -38,6 +38,8 @@ export function IssueFilters({
   onStatusChange,
   onPriorityChange,
   onLabelToggle,
+  hasActiveFilters,
+  onClearFilters,
 }: IssueFiltersProps) {
   const data = useLazyLoadQuery(labelsQuery, {});
   const labels = data.labelsCollection?.edges ?? [];
@@ -63,7 +65,7 @@ export function IssueFilters({
 
       {labels.length > 0 && (
         <div className="flex flex-wrap gap-2">
-          {labels.map((edge: LabelEdge) => {
+          {labels.map((edge: IssueFiltersLabelEdge) => {
             const label = edge.node;
             const selected = selectedLabelIds.has(label.id);
             return (
@@ -82,6 +84,14 @@ export function IssueFilters({
               </button>
             );
           })}
+          {hasActiveFilters && (
+            <button
+              onClick={onClearFilters}
+              className="text-sm text-gray-500 dark:text-gray-400 hover:text-[#ffc008] dark:hover:text-[#ffc008] transition-colors cursor-pointer"
+            >
+              Clear filters
+            </button>
+          )}
         </div>
       )}
     </div>
