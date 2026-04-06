@@ -316,7 +316,7 @@ export function IssueEditForm({ issueRef }: { issueRef: IssueEditForm_issue$key 
         </div>
       </div>
 
-      <Button onClick={handleSave} disabled={isUpdating || !isDirty} className="self-start">
+      <Button onClick={handleSave} disabled={isUpdating || !isDirty} className="self-end">
         {isUpdating ? "Saving..." : "Save changes"}
       </Button>
     </section>

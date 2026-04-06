@@ -19,6 +19,7 @@ const fragment = graphql`
   @refetchable(queryName: "CommentThreadPaginationQuery")
   @argumentDefinitions(first: { type: "Int", defaultValue: 5 }, after: { type: "Cursor" }) {
     nodeId
+    id
     commentsCollection(first: $first, after: $after, orderBy: [{ created_at: AscNullsLast }])
       @connection(key: "CommentThread_issue_commentsCollection") {
       edges {
@@ -76,7 +77,7 @@ export function CommentThread({ issueRef }: { issueRef: CommentThread_issue$key 
 
     commit({
       variables: {
-        issueId: data.nodeId.replace("issues:", ""),
+        issueId: data.id,
         body: result.data.body,
         authorId: DEMO_AUTHOR_ID,
       },
@@ -91,7 +92,8 @@ export function CommentThread({ issueRef }: { issueRef: CommentThread_issue$key 
 
         const connection = ConnectionHandler.getConnection(
           issueRecord,
-          "CommentThread_issue_commentsCollection"
+          "CommentThread_issue_commentsCollection",
+          { orderBy: [{ created_at: "AscNullsLast" }] }
         );
         if (!connection) return;
 
@@ -112,13 +114,13 @@ export function CommentThread({ issueRef }: { issueRef: CommentThread_issue$key 
   return (
     <section aria-label="Comments" className="mt-8">
       <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-1 md:mb-4">Comments</h2>
-      <div className="mb-6">
+      <div className="flex flex-col gap-2 mb-6" suppressHydrationWarning>
         {edges.map((edge: CommentEdge) => (
           <CommentItem key={edge.node.nodeId} commentRef={edge.node} />
         ))}
 
         {hasNextPage && (
-          <Button onClick={() => loadNext(5)} disabled={isLoadingNext}>
+          <Button onClick={() => loadNext(5)} disabled={isLoadingNext} className="self-end">
             {isLoadingNext ? "Loading..." : "Load more comments"}
           </Button>
         )}

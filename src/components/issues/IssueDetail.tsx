@@ -43,11 +43,18 @@ export function IssueDetail({ issueRef }: { issueRef: IssueDetail_issue$key }) {
   return (
     <article>
       <header className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">{issue.title}</h1>
+        <h1
+          suppressHydrationWarning
+          className="text-2xl font-bold text-gray-900 dark:text-white mb-3"
+        >
+          {issue.title}
+        </h1>
 
         <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
           {issue.users && <Avatar name={issue.users.name} avatarUrl={issue.users.avatar_url} />}
-          <time dateTime={issue.created_at}>{new Date(issue.created_at).toLocaleDateString()}</time>
+          <time suppressHydrationWarning dateTime={issue.created_at}>
+            {new Date(issue.created_at).toLocaleDateString()}
+          </time>
           <div className="flex gap-2">
             {issue.issue_labelsCollection?.edges.map((edge: LabelEdge) => (
               <Badge

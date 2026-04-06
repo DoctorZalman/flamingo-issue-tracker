@@ -11,6 +11,10 @@ import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { Container } from "@/components/ui/Container";
 import { ROUTES } from "@/lib/routes";
 
+// Force client-side rendering to avoid hydration mismatches caused by Relay store
+// returning cached data that differs from the server-rendered HTML
+export const dynamic = "force-dynamic";
+
 const query = graphql`
   query pageIssueDetailQuery($id: UUID!) {
     issuesCollection(filter: { id: { eq: $id } }, first: 1) {

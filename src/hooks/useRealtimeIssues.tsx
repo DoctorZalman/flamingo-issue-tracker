@@ -36,7 +36,11 @@ export function useRealtimeIssues() {
           handleDelete((payload.old as { id: string }).id);
         }
       })
-      .subscribe();
+      .subscribe((status) => {
+        if (process.env.NODE_ENV === "development") {
+          console.log("Realtime status:", status);
+        }
+      });
 
     return () => {
       supabase.removeChannel(channel);
