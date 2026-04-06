@@ -3,13 +3,11 @@
 import { usePaginationFragment } from "react-relay";
 import { graphql } from "relay-runtime";
 import type { IssueList_query$key } from "@/__generated__/IssueList_query.graphql";
-import type { IssueList_query$data } from "@/__generated__/IssueList_query.graphql";
 import { IssueListItem } from "./IssueListItem";
 import { StatusSelector } from "./StatusSelector";
 import { registerNodeId } from "@/hooks/useRealtimeIssues";
 import { Button } from "@/components/ui/Button";
-
-type Edge = NonNullable<IssueList_query$data["issuesCollection"]>["edges"][number];
+import { IssueListEdge } from "@/types/issues";
 
 const fragment = graphql`
   fragment IssueList_query on Query
@@ -59,7 +57,7 @@ export function IssueList({
 
   const allEdges = data.issuesCollection?.edges ?? [];
 
-  allEdges.forEach((edge: Edge) => {
+  allEdges.forEach((edge: IssueListEdge) => {
     registerNodeId(edge.node.id, edge.node.nodeId);
   });
 
@@ -67,7 +65,7 @@ export function IssueList({
   const edges =
     selectedLabelIds.size === 0
       ? allEdges
-      : allEdges.filter((edge: Edge) => {
+      : allEdges.filter((edge: IssueListEdge) => {
           const issueLabelIds =
             edge.node.issue_labelsCollection?.edges.map((e) => e.node.label_id as string) ?? [];
           return Array.from(selectedLabelIds).every((id) => issueLabelIds.includes(id));
@@ -80,7 +78,7 @@ export function IssueList({
       {edges.length === 0 ? (
         <p className="p-8 text-center text-gray-500 dark:text-gray-400">No issues found</p>
       ) : (
-        edges.map((edge: Edge) => (
+        edges.map((edge: IssueListEdge) => (
           <div
             key={edge.node.nodeId}
             className="flex items-center border-b border-gray-200 dark:border-gray-700 last:border-0 transition-all duration-200 md:hover:[box-shadow:inset_3px_0_0_#ffc008] md:hover:bg-[#ffc008]/10 animate-[fadeIn_0.5s_ease-out]"

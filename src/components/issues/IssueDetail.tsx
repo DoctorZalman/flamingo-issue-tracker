@@ -7,10 +7,7 @@ import { IssueEditForm } from "./IssueEditForm";
 import { CommentThread } from "./CommentThread";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
-
-import type { IssueDetail_issue$data } from "@/__generated__/IssueDetail_issue.graphql";
-
-type LabelEdge = NonNullable<IssueDetail_issue$data["issue_labelsCollection"]>["edges"][number];
+import { IssueDetailLabelEdge } from "@/types/issues";
 
 const fragment = graphql`
   fragment IssueDetail_issue on issues {
@@ -56,7 +53,7 @@ export function IssueDetail({ issueRef }: { issueRef: IssueDetail_issue$key }) {
             {new Date(issue.created_at).toLocaleDateString()}
           </time>
           <div className="flex gap-2">
-            {issue.issue_labelsCollection?.edges.map((edge: LabelEdge) => (
+            {issue.issue_labelsCollection?.edges.map((edge: IssueDetailLabelEdge) => (
               <Badge
                 key={edge.node.labels?.id}
                 label={edge.node.labels?.name ?? ""}

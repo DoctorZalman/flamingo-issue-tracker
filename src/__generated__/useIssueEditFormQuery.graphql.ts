@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<98c6580cdd3e633a6e1fdfd7117d1325>>
+ * @generated SignedSource<<b34a992608987b95200390655c095ea3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,8 +9,8 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
-export type IssueEditFormQuery$variables = Record<PropertyKey, never>;
-export type IssueEditFormQuery$data = {
+export type useIssueEditFormQuery$variables = Record<PropertyKey, never>;
+export type useIssueEditFormQuery$data = {
   readonly labelsCollection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -29,9 +29,9 @@ export type IssueEditFormQuery$data = {
     }>;
   } | null | undefined;
 };
-export type IssueEditFormQuery = {
-  response: IssueEditFormQuery$data;
-  variables: IssueEditFormQuery$variables;
+export type useIssueEditFormQuery = {
+  response: useIssueEditFormQuery$data;
+  variables: useIssueEditFormQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -68,7 +68,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "IssueEditFormQuery",
+    "name": "useIssueEditFormQuery",
     "selections": [
       {
         "alias": null,
@@ -149,7 +149,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "IssueEditFormQuery",
+    "name": "useIssueEditFormQuery",
     "selections": [
       {
         "alias": null,
@@ -227,16 +227,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "31f6304f157137f140087b99651725fb",
+    "cacheID": "27b87383b9bca085fa0e001ecd6f8069",
     "id": null,
     "metadata": {},
-    "name": "IssueEditFormQuery",
+    "name": "useIssueEditFormQuery",
     "operationKind": "query",
-    "text": "query IssueEditFormQuery {\n  usersCollection {\n    edges {\n      node {\n        id\n        name\n        nodeId\n      }\n    }\n  }\n  labelsCollection {\n    edges {\n      node {\n        id\n        name\n        color\n        nodeId\n      }\n    }\n  }\n}\n"
+    "text": "query useIssueEditFormQuery {\n  usersCollection {\n    edges {\n      node {\n        id\n        name\n        nodeId\n      }\n    }\n  }\n  labelsCollection {\n    edges {\n      node {\n        id\n        name\n        color\n        nodeId\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4fb7420abb4aba33599832928b10d113";
+(node as any).hash = "24521a181d650a24770a649c0818f468";
 
 export default node;

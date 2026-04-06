@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Select } from "@/components/ui/Select";
 
 import type { StatusSelector_issue$key } from "@/__generated__/StatusSelector_issue.graphql";
+import { STATUS_OPTIONS } from "@/lib/constants";
 
 const fragment = graphql`
   fragment StatusSelector_issue on issues {
@@ -24,12 +25,6 @@ const mutation = graphql`
     }
   }
 `;
-
-const STATUS_OPTIONS = [
-  { value: "todo", label: "todo" },
-  { value: "in_progress", label: "in progress" },
-  { value: "done", label: "done" },
-];
 
 export function StatusSelector({ issueRef }: { issueRef: StatusSelector_issue$key }) {
   const issue = useFragment(fragment, issueRef);

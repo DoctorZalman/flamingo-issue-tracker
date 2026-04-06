@@ -4,7 +4,7 @@ interface SelectOption {
 }
 
 interface SelectProps {
-  options: SelectOption[];
+  options: readonly SelectOption[];
   id?: string;
   name?: string;
   value?: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<38a86c3963fb8de6982b36ab8d04c1fb>>
+ * @generated SignedSource<<98c904b7db1bc7e352319becb6f96362>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
-export type IssueEditFormUpdateMutation$variables = {
+export type useIssueEditFormUpdateMutation$variables = {
   assigneeId?: string | null | undefined;
   description?: string | null | undefined;
   nodeId: string;
@@ -17,7 +17,7 @@ export type IssueEditFormUpdateMutation$variables = {
   status: string;
   title: string;
 };
-export type IssueEditFormUpdateMutation$data = {
+export type useIssueEditFormUpdateMutation$data = {
   readonly updateissuesCollection: {
     readonly records: ReadonlyArray<{
       readonly assignee_id: string | null | undefined;
@@ -29,9 +29,9 @@ export type IssueEditFormUpdateMutation$data = {
     }>;
   };
 };
-export type IssueEditFormUpdateMutation = {
-  response: IssueEditFormUpdateMutation$data;
-  variables: IssueEditFormUpdateMutation$variables;
+export type useIssueEditFormUpdateMutation = {
+  response: useIssueEditFormUpdateMutation$data;
+  variables: useIssueEditFormUpdateMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -192,7 +192,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "IssueEditFormUpdateMutation",
+    "name": "useIssueEditFormUpdateMutation",
     "selections": (v6/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -208,20 +208,20 @@ return {
       (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "IssueEditFormUpdateMutation",
+    "name": "useIssueEditFormUpdateMutation",
     "selections": (v6/*: any*/)
   },
   "params": {
-    "cacheID": "0c7dd74f6b4afb3ae88c52a61cb16b7f",
+    "cacheID": "dedfba36e7b7d5b91faef03009ffd407",
     "id": null,
     "metadata": {},
-    "name": "IssueEditFormUpdateMutation",
+    "name": "useIssueEditFormUpdateMutation",
     "operationKind": "mutation",
-    "text": "mutation IssueEditFormUpdateMutation(\n  $nodeId: ID!\n  $title: String!\n  $description: String\n  $status: String!\n  $priority: String!\n  $assigneeId: UUID\n) {\n  updateissuesCollection(filter: {nodeId: {eq: $nodeId}}, set: {title: $title, description: $description, status: $status, priority: $priority, assignee_id: $assigneeId}) {\n    records {\n      nodeId\n      title\n      description\n      status\n      priority\n      assignee_id\n    }\n  }\n}\n"
+    "text": "mutation useIssueEditFormUpdateMutation(\n  $nodeId: ID!\n  $title: String!\n  $description: String\n  $status: String!\n  $priority: String!\n  $assigneeId: UUID\n) {\n  updateissuesCollection(filter: {nodeId: {eq: $nodeId}}, set: {title: $title, description: $description, status: $status, priority: $priority, assignee_id: $assigneeId}) {\n    records {\n      nodeId\n      title\n      description\n      status\n      priority\n      assignee_id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a20513c24bc836fe34741fee3be32555";
+(node as any).hash = "d3d78377d7bdb3ee4b9cce6ff2a3121b";
 
 export default node;

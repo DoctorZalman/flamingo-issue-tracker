@@ -61,3 +61,7 @@ input:-webkit-autofill:focus {
   -webkit-text-fill-color: #f3f4f6;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+html:not(.dark):not(.light-ready) body {
+  visibility: hidden;
+}

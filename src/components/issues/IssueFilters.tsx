@@ -4,22 +4,9 @@ import { useLazyLoadQuery } from "react-relay";
 import { graphql } from "relay-runtime";
 import { Select } from "@/components/ui/Select";
 import type { IssueFiltersQuery$data } from "@/__generated__/IssueFiltersQuery.graphql";
+import { PRIORITY_FILTER_OPTIONS, STATUS_FILTER_OPTIONS } from "@/lib/constants";
 
 type LabelEdge = NonNullable<IssueFiltersQuery$data["labelsCollection"]>["edges"][number];
-
-const STATUS_OPTIONS = [
-  { value: "", label: "All statuses" },
-  { value: "todo", label: "todo" },
-  { value: "in_progress", label: "in progress" },
-  { value: "done", label: "done" },
-];
-
-const PRIORITY_OPTIONS = [
-  { value: "", label: "All priorities" },
-  { value: "low", label: "low" },
-  { value: "medium", label: "medium" },
-  { value: "high", label: "high" },
-];
 
 const labelsQuery = graphql`
   query IssueFiltersQuery {
@@ -62,14 +49,14 @@ export function IssueFilters({
           value={status}
           name="status"
           aria-label="status"
-          options={STATUS_OPTIONS}
+          options={STATUS_FILTER_OPTIONS}
           onChange={(e) => onStatusChange(e.target.value)}
         />
         <Select
           value={priority}
           name="priority"
           aria-label="priority"
-          options={PRIORITY_OPTIONS}
+          options={PRIORITY_FILTER_OPTIONS}
           onChange={(e) => onPriorityChange(e.target.value)}
         />
       </div>
