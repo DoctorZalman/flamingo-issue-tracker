@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<698ecd512dfaee62a22129011081eb05>>
+ * @generated SignedSource<<9ba73c610b4c946c1ecba214c42866a6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,24 +9,20 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
-export type issue_labelsInsertInput = {
-  issue_id?: string | null | undefined;
-  label_id?: string | null | undefined;
+export type useIssueEditFormDeleteLabelsMutation$variables = {
+  issueId: string;
 };
-export type IssueEditFormInsertLabelsMutation$variables = {
-  objects: ReadonlyArray<issue_labelsInsertInput>;
-};
-export type IssueEditFormInsertLabelsMutation$data = {
-  readonly insertIntoissue_labelsCollection: {
+export type useIssueEditFormDeleteLabelsMutation$data = {
+  readonly deleteFromissue_labelsCollection: {
     readonly records: ReadonlyArray<{
       readonly issue_id: string;
       readonly label_id: string;
     }>;
-  } | null | undefined;
+  };
 };
-export type IssueEditFormInsertLabelsMutation = {
-  response: IssueEditFormInsertLabelsMutation$data;
-  variables: IssueEditFormInsertLabelsMutation$variables;
+export type useIssueEditFormDeleteLabelsMutation = {
+  response: useIssueEditFormDeleteLabelsMutation$data;
+  variables: useIssueEditFormDeleteLabelsMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -34,14 +30,31 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "objects"
+    "name": "issueId"
   }
 ],
 v1 = [
   {
-    "kind": "Variable",
-    "name": "objects",
-    "variableName": "objects"
+    "kind": "Literal",
+    "name": "atMost",
+    "value": 10
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "kind": "Variable",
+            "name": "eq",
+            "variableName": "issueId"
+          }
+        ],
+        "kind": "ObjectValue",
+        "name": "issue_id"
+      }
+    ],
+    "kind": "ObjectValue",
+    "name": "filter"
   }
 ],
 v2 = {
@@ -63,14 +76,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "IssueEditFormInsertLabelsMutation",
+    "name": "useIssueEditFormDeleteLabelsMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "issue_labelsInsertResponse",
+        "concreteType": "issue_labelsDeleteResponse",
         "kind": "LinkedField",
-        "name": "insertIntoissue_labelsCollection",
+        "name": "deleteFromissue_labelsCollection",
         "plural": false,
         "selections": [
           {
@@ -97,14 +110,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "IssueEditFormInsertLabelsMutation",
+    "name": "useIssueEditFormDeleteLabelsMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "issue_labelsInsertResponse",
+        "concreteType": "issue_labelsDeleteResponse",
         "kind": "LinkedField",
-        "name": "insertIntoissue_labelsCollection",
+        "name": "deleteFromissue_labelsCollection",
         "plural": false,
         "selections": [
           {
@@ -133,16 +146,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cf5faaf4919ea4acb7f47265f67142ac",
+    "cacheID": "8c40d94f2122a64eeaf131b724b51ef7",
     "id": null,
     "metadata": {},
-    "name": "IssueEditFormInsertLabelsMutation",
+    "name": "useIssueEditFormDeleteLabelsMutation",
     "operationKind": "mutation",
-    "text": "mutation IssueEditFormInsertLabelsMutation(\n  $objects: [issue_labelsInsertInput!]!\n) {\n  insertIntoissue_labelsCollection(objects: $objects) {\n    records {\n      issue_id\n      label_id\n      nodeId\n    }\n  }\n}\n"
+    "text": "mutation useIssueEditFormDeleteLabelsMutation(\n  $issueId: UUID!\n) {\n  deleteFromissue_labelsCollection(filter: {issue_id: {eq: $issueId}}, atMost: 10) {\n    records {\n      issue_id\n      label_id\n      nodeId\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "73d83fd06d9fcce75ffeab5129df16c0";
+(node as any).hash = "641985c63be2c90b10bec5b888d45892";
 
 export default node;

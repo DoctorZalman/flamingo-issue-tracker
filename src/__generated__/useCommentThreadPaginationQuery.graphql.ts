@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b7ab9a1a50ea08b4e743c2b1058efff4>>
+ * @generated SignedSource<<5105a1feb9e6cdd9503d16ccd18a632c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,19 +10,19 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CommentThreadPaginationQuery$variables = {
+export type useCommentThreadPaginationQuery$variables = {
   after?: string | null | undefined;
   first?: number | null | undefined;
   nodeId: string;
 };
-export type CommentThreadPaginationQuery$data = {
+export type useCommentThreadPaginationQuery$data = {
   readonly node: {
-    readonly " $fragmentSpreads": FragmentRefs<"CommentThread_issue">;
+    readonly " $fragmentSpreads": FragmentRefs<"useCommentThread_issue">;
   } | null | undefined;
 };
-export type CommentThreadPaginationQuery = {
-  response: CommentThreadPaginationQuery$data;
-  variables: CommentThreadPaginationQuery$variables;
+export type useCommentThreadPaginationQuery = {
+  response: useCommentThreadPaginationQuery$data;
+  variables: useCommentThreadPaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -92,7 +92,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CommentThreadPaginationQuery",
+    "name": "useCommentThreadPaginationQuery",
     "selections": [
       {
         "alias": null,
@@ -108,7 +108,7 @@ return {
               (v3/*: any*/)
             ],
             "kind": "FragmentSpread",
-            "name": "CommentThread_issue"
+            "name": "useCommentThread_issue"
           }
         ],
         "storageKey": null
@@ -121,7 +121,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CommentThreadPaginationQuery",
+    "name": "useCommentThreadPaginationQuery",
     "selections": [
       {
         "alias": null,
@@ -257,7 +257,7 @@ return {
                   "orderBy"
                 ],
                 "handle": "connection",
-                "key": "CommentThread_issue_commentsCollection",
+                "key": "useCommentThread_issue_commentsCollection",
                 "kind": "LinkedHandle",
                 "name": "commentsCollection"
               }
@@ -271,16 +271,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5385cfcd089773f13d49c09a7182390a",
+    "cacheID": "4c5629df4fdf792b85e9220527bc3c87",
     "id": null,
     "metadata": {},
-    "name": "CommentThreadPaginationQuery",
+    "name": "useCommentThreadPaginationQuery",
     "operationKind": "query",
-    "text": "query CommentThreadPaginationQuery(\n  $after: Cursor\n  $first: Int = 5\n  $nodeId: ID!\n) {\n  node(nodeId: $nodeId) {\n    __typename\n    ...CommentThread_issue_2HEEH6\n    nodeId\n  }\n}\n\nfragment CommentItem_comment on comments {\n  nodeId\n  body\n  created_at\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n}\n\nfragment CommentThread_issue_2HEEH6 on issues {\n  nodeId\n  id\n  commentsCollection(first: $first, after: $after, orderBy: [{created_at: AscNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...CommentItem_comment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query useCommentThreadPaginationQuery(\n  $after: Cursor\n  $first: Int = 5\n  $nodeId: ID!\n) {\n  node(nodeId: $nodeId) {\n    __typename\n    ...useCommentThread_issue_2HEEH6\n    nodeId\n  }\n}\n\nfragment CommentItem_comment on comments {\n  nodeId\n  body\n  created_at\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n}\n\nfragment useCommentThread_issue_2HEEH6 on issues {\n  nodeId\n  id\n  commentsCollection(first: $first, after: $after, orderBy: [{created_at: AscNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...CommentItem_comment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "424593ce61e988eef8410f0a01a14583";
+(node as any).hash = "72bacef6e56fb1ab2fa2ca7eb43851e6";
 
 export default node;

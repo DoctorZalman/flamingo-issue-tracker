@@ -1,115 +1,36 @@
 "use client";
 
-import { usePaginationFragment, useMutation } from "react-relay";
-import { graphql, ConnectionHandler } from "relay-runtime";
-import { useRef, useState } from "react";
-import { toast } from "sonner";
-import type { CommentThread_issue$key } from "@/__generated__/CommentThread_issue.graphql";
-import type { CommentThread_issue$data } from "@/__generated__/CommentThread_issue.graphql";
-import { CommentItem } from "./CommentItem";
-import { CommentSchema } from "@/lib/zod-schemas";
-import { Button } from "@/components/ui/Button";
+import { useFragment } from "react-relay";
+import { graphql } from "relay-runtime";
 import { Textarea } from "@/components/ui/Textarea";
 import { Label } from "@/components/ui/Label";
-
-type CommentEdge = NonNullable<CommentThread_issue$data["commentsCollection"]>["edges"][number];
+import { Button } from "@/components/ui/Button";
+import { CommentItem } from "./CommentItem";
+import { useCommentThread } from "@/hooks/useCommentThread";
+import type { CommentThread_issue$key } from "@/__generated__/CommentThread_issue.graphql";
+import type { CommentEdge } from "@/types/comments";
 
 const fragment = graphql`
-  fragment CommentThread_issue on issues
-  @refetchable(queryName: "CommentThreadPaginationQuery")
-  @argumentDefinitions(first: { type: "Int", defaultValue: 5 }, after: { type: "Cursor" }) {
-    nodeId
-    id
-    commentsCollection(first: $first, after: $after, orderBy: [{ created_at: AscNullsLast }])
-      @connection(key: "CommentThread_issue_commentsCollection") {
-      edges {
-        node {
-          nodeId
-          ...CommentItem_comment
-        }
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-    }
+  fragment CommentThread_issue on issues {
+    ...useCommentThread_issue
   }
 `;
-
-const addCommentMutation = graphql`
-  mutation CommentThreadAddMutation($issueId: UUID!, $body: String!, $authorId: UUID!) {
-    insertIntocommentsCollection(
-      objects: [{ issue_id: $issueId, body: $body, author_id: $authorId }]
-    ) {
-      records {
-        nodeId
-        ...CommentItem_comment
-      }
-    }
-  }
-`;
-
-// Default author for demo — first seed user
-const DEMO_AUTHOR_ID = "a1b2c3d4-0000-0000-0000-000000000001";
 
 export function CommentThread({ issueRef }: { issueRef: CommentThread_issue$key }) {
-  const { data, loadNext, isLoadingNext } = usePaginationFragment(fragment, issueRef);
-  const [commit, isInFlight] = useMutation(addCommentMutation);
-  const [hasContent, setHasContent] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const data = useFragment(fragment, issueRef);
 
-  // Uncontrolled input — avoids re-render on every keystroke
-  const bodyRef = useRef<HTMLTextAreaElement>(null);
-
-  const edges = data.commentsCollection?.edges ?? [];
-  const hasNextPage = data.commentsCollection?.pageInfo.hasNextPage ?? false;
-
-  const handleSubmit = () => {
-    const body = bodyRef.current?.value ?? "";
-    const result = CommentSchema.safeParse({ body });
-
-    if (!result.success) {
-      setError(result.error.issues[0].message);
-      return;
-    }
-
-    setError(null);
-
-    commit({
-      variables: {
-        issueId: data.id,
-        body: result.data.body,
-        authorId: DEMO_AUTHOR_ID,
-      },
-      // Prepend new comment to connection
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      updater: (store: any, payload: any) => {
-        const records = payload?.insertIntocommentsCollection?.records;
-        if (!records?.length) return;
-
-        const issueRecord = store.get(data.nodeId);
-        if (!issueRecord) return;
-
-        const connection = ConnectionHandler.getConnection(
-          issueRecord,
-          "CommentThread_issue_commentsCollection",
-          { orderBy: [{ created_at: "AscNullsLast" }] }
-        );
-        if (!connection) return;
-
-        const newRecord = store.get(records[0].nodeId);
-        if (!newRecord) return;
-
-        const edge = ConnectionHandler.createEdge(store, connection, newRecord, "commentsEdge");
-        ConnectionHandler.insertEdgeAfter(connection, edge);
-      },
-      onCompleted: () => {
-        if (bodyRef.current) bodyRef.current.value = "";
-        toast.success("Comment added");
-      },
-      onError: () => toast.error("Failed to add comment"),
-    });
-  };
+  const {
+    edges,
+    hasNextPage,
+    isLoadingNext,
+    isInFlight,
+    error,
+    hasContent,
+    bodyRef,
+    setHasContent,
+    loadNext,
+    handleSubmit,
+  } = useCommentThread(data);
 
   return (
     <section aria-label="Comments" className="mt-8">

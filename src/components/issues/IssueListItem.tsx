@@ -3,11 +3,9 @@
 import { useFragment } from "react-relay";
 import { graphql } from "relay-runtime";
 import type { IssueListItem_issue$key } from "@/__generated__/IssueListItem_issue.graphql";
-import type { IssueListItem_issue$data } from "@/__generated__/IssueListItem_issue.graphql";
 import Link from "next/link";
 import { ROUTES } from "@/lib/routes";
-
-type LabelEdge = NonNullable<IssueListItem_issue$data["issue_labelsCollection"]>["edges"][number];
+import { IssueListItemLabelEdge } from "@/types/issues";
 
 const fragment = graphql`
   fragment IssueListItem_issue on issues {
@@ -50,7 +48,7 @@ export function IssueListItem({ issueRef }: { issueRef: IssueListItem_issue$key 
         </p>{" "}
         {issue.users && <span className="text-xs text-gray-500">{issue.users.name}</span>}
         <div className="flex flex-col md:flex-row md:flex-wrap gap-1 md:gap-2">
-          {issue.issue_labelsCollection?.edges.map((edge: LabelEdge) => (
+          {issue.issue_labelsCollection?.edges.map((edge: IssueListItemLabelEdge) => (
             <span
               key={edge.node.labels?.id}
               className="text-xs px-2 py-0.5 rounded-full text-white w-fit"
