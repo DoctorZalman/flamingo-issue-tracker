@@ -42,7 +42,10 @@ export function IssueListItem({ issueRef }: { issueRef: IssueListItem_issue$key 
       className="flex items-center justify-between p-4 transition-colors"
     >
       <div className="flex flex-col gap-1">
-        <p className="font-medium text-gray-900 dark:text-white max-w-[140px] md:max-w-none truncate">
+        <p
+          suppressHydrationWarning
+          className="font-medium text-gray-900 dark:text-white max-w-[140px] md:max-w-none truncate"
+        >
           {issue.title}
         </p>{" "}
         {issue.users && <span className="text-xs text-gray-500">{issue.users.name}</span>}
@@ -60,7 +63,10 @@ export function IssueListItem({ issueRef }: { issueRef: IssueListItem_issue$key 
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <span className="text-xs text-gray-500 dark:text-gray-400 capitalize">
+        <span
+          suppressHydrationWarning
+          className="text-xs text-gray-500 dark:text-gray-400 capitalize"
+        >
           {issue.priority}
         </span>
       </div>

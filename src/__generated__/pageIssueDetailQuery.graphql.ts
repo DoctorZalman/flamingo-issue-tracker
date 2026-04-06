@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2fd340f519a9ef04387ccdca105f6103>>
+ * @generated SignedSource<<3738e42f3d349a353bcd35f6aa7e9d44>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -410,12 +410,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b1985fbe744710da11395e007122a83d",
+    "cacheID": "a443e18311641c24e3b81c95b09bf4b3",
     "id": null,
     "metadata": {},
     "name": "pageIssueDetailQuery",
     "operationKind": "query",
-    "text": "query pageIssueDetailQuery(\n  $id: UUID!\n) {\n  issuesCollection(filter: {id: {eq: $id}}, first: 1) {\n    edges {\n      node {\n        nodeId\n        ...IssueDetail_issue\n      }\n    }\n  }\n}\n\nfragment CommentItem_comment on comments {\n  nodeId\n  body\n  created_at\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n}\n\nfragment CommentThread_issue on issues {\n  nodeId\n  commentsCollection(first: 5, orderBy: [{created_at: AscNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...CommentItem_comment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment IssueDetail_issue on issues {\n  nodeId\n  title\n  created_at\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n  ...IssueEditForm_issue\n  ...CommentThread_issue\n}\n\nfragment IssueEditForm_issue on issues {\n  nodeId\n  id\n  title\n  description\n  status\n  priority\n  assignee_id\n  issue_labelsCollection {\n    edges {\n      node {\n        label_id\n        nodeId\n      }\n    }\n  }\n}\n"
+    "text": "query pageIssueDetailQuery(\n  $id: UUID!\n) {\n  issuesCollection(filter: {id: {eq: $id}}, first: 1) {\n    edges {\n      node {\n        nodeId\n        ...IssueDetail_issue\n      }\n    }\n  }\n}\n\nfragment CommentItem_comment on comments {\n  nodeId\n  body\n  created_at\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n}\n\nfragment CommentThread_issue on issues {\n  nodeId\n  id\n  commentsCollection(first: 5, orderBy: [{created_at: AscNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...CommentItem_comment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment IssueDetail_issue on issues {\n  nodeId\n  title\n  created_at\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n  issue_labelsCollection {\n    edges {\n      node {\n        labels {\n          id\n          name\n          color\n          nodeId\n        }\n        nodeId\n      }\n    }\n  }\n  ...IssueEditForm_issue\n  ...CommentThread_issue\n}\n\nfragment IssueEditForm_issue on issues {\n  nodeId\n  id\n  title\n  description\n  status\n  priority\n  assignee_id\n  issue_labelsCollection {\n    edges {\n      node {\n        label_id\n        nodeId\n      }\n    }\n  }\n}\n"
   }
 };
 })();

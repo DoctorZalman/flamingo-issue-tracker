@@ -21,10 +21,17 @@ export function CommentItem({ commentRef }: { commentRef: CommentItem_comment$ke
   const comment = useFragment(fragment, commentRef);
 
   return (
-    <article className="flex flex-col gap-2 py-4 border-b border-gray-100 dark:border-gray-800 last:border-0">
+    <article
+      suppressHydrationWarning
+      className="flex flex-col gap-2 py-4 border-b border-gray-100 dark:border-gray-800 last:border-0 animate-[fadeIn_0.5s_ease-out]"
+    >
       <div className="flex items-center justify-between">
         {comment.users && <Avatar name={comment.users.name} avatarUrl={comment.users.avatar_url} />}
-        <time dateTime={comment.created_at} className="text-xs text-gray-400 dark:text-gray-500">
+        <time
+          suppressHydrationWarning
+          dateTime={comment.created_at}
+          className="text-xs text-gray-400 dark:text-gray-500"
+        >
           {new Date(comment.created_at).toLocaleDateString()}
         </time>
       </div>

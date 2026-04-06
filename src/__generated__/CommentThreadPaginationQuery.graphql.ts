@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4f68404b1fc9281bc4e534769f1785a3>>
+ * @generated SignedSource<<b7ab9a1a50ea08b4e743c2b1058efff4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -138,6 +138,13 @@ return {
             "selections": [
               {
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              },
+              {
+                "alias": null,
                 "args": (v6/*: any*/),
                 "concreteType": "commentsConnection",
                 "kind": "LinkedField",
@@ -264,16 +271,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c25d0d270c10f7b69c562bcf47f22f59",
+    "cacheID": "5385cfcd089773f13d49c09a7182390a",
     "id": null,
     "metadata": {},
     "name": "CommentThreadPaginationQuery",
     "operationKind": "query",
-    "text": "query CommentThreadPaginationQuery(\n  $after: Cursor\n  $first: Int = 5\n  $nodeId: ID!\n) {\n  node(nodeId: $nodeId) {\n    __typename\n    ...CommentThread_issue_2HEEH6\n    nodeId\n  }\n}\n\nfragment CommentItem_comment on comments {\n  nodeId\n  body\n  created_at\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n}\n\nfragment CommentThread_issue_2HEEH6 on issues {\n  nodeId\n  commentsCollection(first: $first, after: $after, orderBy: [{created_at: AscNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...CommentItem_comment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query CommentThreadPaginationQuery(\n  $after: Cursor\n  $first: Int = 5\n  $nodeId: ID!\n) {\n  node(nodeId: $nodeId) {\n    __typename\n    ...CommentThread_issue_2HEEH6\n    nodeId\n  }\n}\n\nfragment CommentItem_comment on comments {\n  nodeId\n  body\n  created_at\n  users {\n    name\n    avatar_url\n    nodeId\n  }\n}\n\nfragment CommentThread_issue_2HEEH6 on issues {\n  nodeId\n  id\n  commentsCollection(first: $first, after: $after, orderBy: [{created_at: AscNullsLast}]) {\n    edges {\n      node {\n        nodeId\n        ...CommentItem_comment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1626736e62daaabfce1b72eba33b08f0";
+(node as any).hash = "424593ce61e988eef8410f0a01a14583";
 
 export default node;

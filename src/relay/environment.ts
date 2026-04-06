@@ -33,3 +33,7 @@ export function getEnvironment(): InstanceType<typeof Environment> {
   if (!environment) environment = createEnvironment();
   return environment;
 }
+
+export function resetEnvironment(): void {
+  environment = null;
+}

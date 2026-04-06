@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cbf98ad488ef8a54b01f27ffa85dbee8>>
+ * @generated SignedSource<<2f8c6d6a5a17bf78c46118f461a2a2c3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type CommentThread_issue$data = {
       readonly hasNextPage: boolean;
     };
   } | null | undefined;
+  readonly id: string;
   readonly nodeId: string;
   readonly " $fragmentType": "CommentThread_issue";
 };
@@ -89,6 +90,13 @@ return {
   "name": "CommentThread_issue",
   "selections": [
     (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     {
       "alias": "commentsCollection",
       "args": [
@@ -183,6 +191,6 @@ return {
 };
 })();
 
-(node as any).hash = "1626736e62daaabfce1b72eba33b08f0";
+(node as any).hash = "424593ce61e988eef8410f0a01a14583";
 
 export default node;
