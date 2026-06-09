@@ -1,6 +1,6 @@
 # 🦩 Flamingo Issue Tracker
 
-A minimal issue tracker built as a take-home assignment for Flamingo.
+A minimal issue tracker.
 
 ## Tech Stack
 
